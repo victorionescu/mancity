@@ -88,4 +88,228 @@ class Team {
 
 }
 
+class Player {
+  static $_TSPEC;
+
+  public $playerFirstName = null;
+  public $playerLastName = null;
+
+  public function __construct($vals=null) {
+    if (!isset(self::$_TSPEC)) {
+      self::$_TSPEC = array(
+        1 => array(
+          'var' => 'playerFirstName',
+          'type' => TType::STRING,
+          ),
+        2 => array(
+          'var' => 'playerLastName',
+          'type' => TType::STRING,
+          ),
+        );
+    }
+    if (is_array($vals)) {
+      if (isset($vals['playerFirstName'])) {
+        $this->playerFirstName = $vals['playerFirstName'];
+      }
+      if (isset($vals['playerLastName'])) {
+        $this->playerLastName = $vals['playerLastName'];
+      }
+    }
+  }
+
+  public function getName() {
+    return 'Player';
+  }
+
+  public function read($input)
+  {
+    $xfer = 0;
+    $fname = null;
+    $ftype = 0;
+    $fid = 0;
+    $xfer += $input->readStructBegin($fname);
+    while (true)
+    {
+      $xfer += $input->readFieldBegin($fname, $ftype, $fid);
+      if ($ftype == TType::STOP) {
+        break;
+      }
+      switch ($fid)
+      {
+        case 1:
+          if ($ftype == TType::STRING) {
+            $xfer += $input->readString($this->playerFirstName);
+          } else {
+            $xfer += $input->skip($ftype);
+          }
+          break;
+        case 2:
+          if ($ftype == TType::STRING) {
+            $xfer += $input->readString($this->playerLastName);
+          } else {
+            $xfer += $input->skip($ftype);
+          }
+          break;
+        default:
+          $xfer += $input->skip($ftype);
+          break;
+      }
+      $xfer += $input->readFieldEnd();
+    }
+    $xfer += $input->readStructEnd();
+    return $xfer;
+  }
+
+  public function write($output) {
+    $xfer = 0;
+    $xfer += $output->writeStructBegin('Player');
+    if ($this->playerFirstName !== null) {
+      $xfer += $output->writeFieldBegin('playerFirstName', TType::STRING, 1);
+      $xfer += $output->writeString($this->playerFirstName);
+      $xfer += $output->writeFieldEnd();
+    }
+    if ($this->playerLastName !== null) {
+      $xfer += $output->writeFieldBegin('playerLastName', TType::STRING, 2);
+      $xfer += $output->writeString($this->playerLastName);
+      $xfer += $output->writeFieldEnd();
+    }
+    $xfer += $output->writeFieldStop();
+    $xfer += $output->writeStructEnd();
+    return $xfer;
+  }
+
+}
+
+class PlayerAttributes {
+  static $_TSPEC;
+
+  public $passesSuccess = null;
+  public $passesFail = null;
+  public $shotsOnTarget = null;
+  public $shotsOffTarget = null;
+
+  public function __construct($vals=null) {
+    if (!isset(self::$_TSPEC)) {
+      self::$_TSPEC = array(
+        1 => array(
+          'var' => 'passesSuccess',
+          'type' => TType::I32,
+          ),
+        2 => array(
+          'var' => 'passesFail',
+          'type' => TType::I32,
+          ),
+        3 => array(
+          'var' => 'shotsOnTarget',
+          'type' => TType::I32,
+          ),
+        4 => array(
+          'var' => 'shotsOffTarget',
+          'type' => TType::I32,
+          ),
+        );
+    }
+    if (is_array($vals)) {
+      if (isset($vals['passesSuccess'])) {
+        $this->passesSuccess = $vals['passesSuccess'];
+      }
+      if (isset($vals['passesFail'])) {
+        $this->passesFail = $vals['passesFail'];
+      }
+      if (isset($vals['shotsOnTarget'])) {
+        $this->shotsOnTarget = $vals['shotsOnTarget'];
+      }
+      if (isset($vals['shotsOffTarget'])) {
+        $this->shotsOffTarget = $vals['shotsOffTarget'];
+      }
+    }
+  }
+
+  public function getName() {
+    return 'PlayerAttributes';
+  }
+
+  public function read($input)
+  {
+    $xfer = 0;
+    $fname = null;
+    $ftype = 0;
+    $fid = 0;
+    $xfer += $input->readStructBegin($fname);
+    while (true)
+    {
+      $xfer += $input->readFieldBegin($fname, $ftype, $fid);
+      if ($ftype == TType::STOP) {
+        break;
+      }
+      switch ($fid)
+      {
+        case 1:
+          if ($ftype == TType::I32) {
+            $xfer += $input->readI32($this->passesSuccess);
+          } else {
+            $xfer += $input->skip($ftype);
+          }
+          break;
+        case 2:
+          if ($ftype == TType::I32) {
+            $xfer += $input->readI32($this->passesFail);
+          } else {
+            $xfer += $input->skip($ftype);
+          }
+          break;
+        case 3:
+          if ($ftype == TType::I32) {
+            $xfer += $input->readI32($this->shotsOnTarget);
+          } else {
+            $xfer += $input->skip($ftype);
+          }
+          break;
+        case 4:
+          if ($ftype == TType::I32) {
+            $xfer += $input->readI32($this->shotsOffTarget);
+          } else {
+            $xfer += $input->skip($ftype);
+          }
+          break;
+        default:
+          $xfer += $input->skip($ftype);
+          break;
+      }
+      $xfer += $input->readFieldEnd();
+    }
+    $xfer += $input->readStructEnd();
+    return $xfer;
+  }
+
+  public function write($output) {
+    $xfer = 0;
+    $xfer += $output->writeStructBegin('PlayerAttributes');
+    if ($this->passesSuccess !== null) {
+      $xfer += $output->writeFieldBegin('passesSuccess', TType::I32, 1);
+      $xfer += $output->writeI32($this->passesSuccess);
+      $xfer += $output->writeFieldEnd();
+    }
+    if ($this->passesFail !== null) {
+      $xfer += $output->writeFieldBegin('passesFail', TType::I32, 2);
+      $xfer += $output->writeI32($this->passesFail);
+      $xfer += $output->writeFieldEnd();
+    }
+    if ($this->shotsOnTarget !== null) {
+      $xfer += $output->writeFieldBegin('shotsOnTarget', TType::I32, 3);
+      $xfer += $output->writeI32($this->shotsOnTarget);
+      $xfer += $output->writeFieldEnd();
+    }
+    if ($this->shotsOffTarget !== null) {
+      $xfer += $output->writeFieldBegin('shotsOffTarget', TType::I32, 4);
+      $xfer += $output->writeI32($this->shotsOffTarget);
+      $xfer += $output->writeFieldEnd();
+    }
+    $xfer += $output->writeFieldStop();
+    $xfer += $output->writeStructEnd();
+    return $xfer;
+  }
+
+}
+
 

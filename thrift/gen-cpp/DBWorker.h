@@ -17,6 +17,8 @@ class DBWorkerIf {
   virtual ~DBWorkerIf() {}
   virtual void ping() = 0;
   virtual void allTeams(TeamList& _return) = 0;
+  virtual void teamPlayers(PlayerList& _return, const int32_t team_id) = 0;
+  virtual void playerAttributes(PlayerAttributes& _return, const int32_t team_id, const int32_t player_id) = 0;
 };
 
 class DBWorkerIfFactory {
@@ -50,6 +52,12 @@ class DBWorkerNull : virtual public DBWorkerIf {
     return;
   }
   void allTeams(TeamList& /* _return */) {
+    return;
+  }
+  void teamPlayers(PlayerList& /* _return */, const int32_t /* team_id */) {
+    return;
+  }
+  void playerAttributes(PlayerAttributes& /* _return */, const int32_t /* team_id */, const int32_t /* player_id */) {
     return;
   }
 };
@@ -222,6 +230,231 @@ class DBWorker_allTeams_presult {
 
 };
 
+typedef struct _DBWorker_teamPlayers_args__isset {
+  _DBWorker_teamPlayers_args__isset() : team_id(false) {}
+  bool team_id;
+} _DBWorker_teamPlayers_args__isset;
+
+class DBWorker_teamPlayers_args {
+ public:
+
+  DBWorker_teamPlayers_args() : team_id(0) {
+  }
+
+  virtual ~DBWorker_teamPlayers_args() throw() {}
+
+  int32_t team_id;
+
+  _DBWorker_teamPlayers_args__isset __isset;
+
+  void __set_team_id(const int32_t val) {
+    team_id = val;
+  }
+
+  bool operator == (const DBWorker_teamPlayers_args & rhs) const
+  {
+    if (!(team_id == rhs.team_id))
+      return false;
+    return true;
+  }
+  bool operator != (const DBWorker_teamPlayers_args &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const DBWorker_teamPlayers_args & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+
+class DBWorker_teamPlayers_pargs {
+ public:
+
+
+  virtual ~DBWorker_teamPlayers_pargs() throw() {}
+
+  const int32_t* team_id;
+
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+typedef struct _DBWorker_teamPlayers_result__isset {
+  _DBWorker_teamPlayers_result__isset() : success(false) {}
+  bool success;
+} _DBWorker_teamPlayers_result__isset;
+
+class DBWorker_teamPlayers_result {
+ public:
+
+  DBWorker_teamPlayers_result() {
+  }
+
+  virtual ~DBWorker_teamPlayers_result() throw() {}
+
+  PlayerList success;
+
+  _DBWorker_teamPlayers_result__isset __isset;
+
+  void __set_success(const PlayerList& val) {
+    success = val;
+  }
+
+  bool operator == (const DBWorker_teamPlayers_result & rhs) const
+  {
+    if (!(success == rhs.success))
+      return false;
+    return true;
+  }
+  bool operator != (const DBWorker_teamPlayers_result &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const DBWorker_teamPlayers_result & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+typedef struct _DBWorker_teamPlayers_presult__isset {
+  _DBWorker_teamPlayers_presult__isset() : success(false) {}
+  bool success;
+} _DBWorker_teamPlayers_presult__isset;
+
+class DBWorker_teamPlayers_presult {
+ public:
+
+
+  virtual ~DBWorker_teamPlayers_presult() throw() {}
+
+  PlayerList* success;
+
+  _DBWorker_teamPlayers_presult__isset __isset;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+
+};
+
+typedef struct _DBWorker_playerAttributes_args__isset {
+  _DBWorker_playerAttributes_args__isset() : team_id(false), player_id(false) {}
+  bool team_id;
+  bool player_id;
+} _DBWorker_playerAttributes_args__isset;
+
+class DBWorker_playerAttributes_args {
+ public:
+
+  DBWorker_playerAttributes_args() : team_id(0), player_id(0) {
+  }
+
+  virtual ~DBWorker_playerAttributes_args() throw() {}
+
+  int32_t team_id;
+  int32_t player_id;
+
+  _DBWorker_playerAttributes_args__isset __isset;
+
+  void __set_team_id(const int32_t val) {
+    team_id = val;
+  }
+
+  void __set_player_id(const int32_t val) {
+    player_id = val;
+  }
+
+  bool operator == (const DBWorker_playerAttributes_args & rhs) const
+  {
+    if (!(team_id == rhs.team_id))
+      return false;
+    if (!(player_id == rhs.player_id))
+      return false;
+    return true;
+  }
+  bool operator != (const DBWorker_playerAttributes_args &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const DBWorker_playerAttributes_args & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+
+class DBWorker_playerAttributes_pargs {
+ public:
+
+
+  virtual ~DBWorker_playerAttributes_pargs() throw() {}
+
+  const int32_t* team_id;
+  const int32_t* player_id;
+
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+typedef struct _DBWorker_playerAttributes_result__isset {
+  _DBWorker_playerAttributes_result__isset() : success(false) {}
+  bool success;
+} _DBWorker_playerAttributes_result__isset;
+
+class DBWorker_playerAttributes_result {
+ public:
+
+  DBWorker_playerAttributes_result() {
+  }
+
+  virtual ~DBWorker_playerAttributes_result() throw() {}
+
+  PlayerAttributes success;
+
+  _DBWorker_playerAttributes_result__isset __isset;
+
+  void __set_success(const PlayerAttributes& val) {
+    success = val;
+  }
+
+  bool operator == (const DBWorker_playerAttributes_result & rhs) const
+  {
+    if (!(success == rhs.success))
+      return false;
+    return true;
+  }
+  bool operator != (const DBWorker_playerAttributes_result &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const DBWorker_playerAttributes_result & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+typedef struct _DBWorker_playerAttributes_presult__isset {
+  _DBWorker_playerAttributes_presult__isset() : success(false) {}
+  bool success;
+} _DBWorker_playerAttributes_presult__isset;
+
+class DBWorker_playerAttributes_presult {
+ public:
+
+
+  virtual ~DBWorker_playerAttributes_presult() throw() {}
+
+  PlayerAttributes* success;
+
+  _DBWorker_playerAttributes_presult__isset __isset;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+
+};
+
 class DBWorkerClient : virtual public DBWorkerIf {
  public:
   DBWorkerClient(boost::shared_ptr< ::apache::thrift::protocol::TProtocol> prot) :
@@ -248,6 +481,12 @@ class DBWorkerClient : virtual public DBWorkerIf {
   void allTeams(TeamList& _return);
   void send_allTeams();
   void recv_allTeams(TeamList& _return);
+  void teamPlayers(PlayerList& _return, const int32_t team_id);
+  void send_teamPlayers(const int32_t team_id);
+  void recv_teamPlayers(PlayerList& _return);
+  void playerAttributes(PlayerAttributes& _return, const int32_t team_id, const int32_t player_id);
+  void send_playerAttributes(const int32_t team_id, const int32_t player_id);
+  void recv_playerAttributes(PlayerAttributes& _return);
  protected:
   boost::shared_ptr< ::apache::thrift::protocol::TProtocol> piprot_;
   boost::shared_ptr< ::apache::thrift::protocol::TProtocol> poprot_;
@@ -265,11 +504,15 @@ class DBWorkerProcessor : public ::apache::thrift::TDispatchProcessor {
   ProcessMap processMap_;
   void process_ping(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
   void process_allTeams(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
+  void process_teamPlayers(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
+  void process_playerAttributes(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
  public:
   DBWorkerProcessor(boost::shared_ptr<DBWorkerIf> iface) :
     iface_(iface) {
     processMap_["ping"] = &DBWorkerProcessor::process_ping;
     processMap_["allTeams"] = &DBWorkerProcessor::process_allTeams;
+    processMap_["teamPlayers"] = &DBWorkerProcessor::process_teamPlayers;
+    processMap_["playerAttributes"] = &DBWorkerProcessor::process_playerAttributes;
   }
 
   virtual ~DBWorkerProcessor() {}
@@ -314,6 +557,26 @@ class DBWorkerMultiface : virtual public DBWorkerIf {
       ifaces_[i]->allTeams(_return);
     }
     ifaces_[i]->allTeams(_return);
+    return;
+  }
+
+  void teamPlayers(PlayerList& _return, const int32_t team_id) {
+    size_t sz = ifaces_.size();
+    size_t i = 0;
+    for (; i < (sz - 1); ++i) {
+      ifaces_[i]->teamPlayers(_return, team_id);
+    }
+    ifaces_[i]->teamPlayers(_return, team_id);
+    return;
+  }
+
+  void playerAttributes(PlayerAttributes& _return, const int32_t team_id, const int32_t player_id) {
+    size_t sz = ifaces_.size();
+    size_t i = 0;
+    for (; i < (sz - 1); ++i) {
+      ifaces_[i]->playerAttributes(_return, team_id, player_id);
+    }
+    ifaces_[i]->playerAttributes(_return, team_id, player_id);
     return;
   }
 

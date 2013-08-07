@@ -12,7 +12,9 @@
 
   $client = new DBWorkerClient($protocol);
 
-  $client->ping();
+  $response = $client->allTeams();
+
+  echo json_encode($response);
 
   $transport->close();
 ?>

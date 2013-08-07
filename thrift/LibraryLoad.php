@@ -20,4 +20,5 @@
 
   require_once 'gen-php/mancity/Types.php';
   require_once 'gen-php/mancity/DBWorker.php';
+  require_once 'gen-php/mancity/DBMaster.php';
 ?>

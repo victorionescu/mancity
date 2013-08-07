@@ -32,6 +32,16 @@ class DBWorkerHandler : virtual public DBWorkerIf {
     printf("allTeams\n");
   }
 
+  void teamPlayers(PlayerList& _return, const int32_t team_id) {
+    // Your implementation goes here
+    printf("teamPlayers\n");
+  }
+
+  void playerAttributes(PlayerAttributes& _return, const int32_t team_id, const int32_t player_id) {
+    // Your implementation goes here
+    printf("playerAttributes\n");
+  }
+
 };
 
 int main(int argc, char **argv) {

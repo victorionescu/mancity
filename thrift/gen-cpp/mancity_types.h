@@ -18,19 +18,26 @@ namespace mancity {
 
 typedef std::vector<class Team>  TeamList;
 
+typedef std::vector<class Player>  PlayerList;
+
 
 class Team {
  public:
 
-  static const char* ascii_fingerprint; // = "EFB929595D312AC8F305D5A794CFEDA1";
-  static const uint8_t binary_fingerprint[16]; // = {0xEF,0xB9,0x29,0x59,0x5D,0x31,0x2A,0xC8,0xF3,0x05,0xD5,0xA7,0x94,0xCF,0xED,0xA1};
+  static const char* ascii_fingerprint; // = "3F5FC93B338687BC7235B1AB103F47B3";
+  static const uint8_t binary_fingerprint[16]; // = {0x3F,0x5F,0xC9,0x3B,0x33,0x86,0x87,0xBC,0x72,0x35,0xB1,0xAB,0x10,0x3F,0x47,0xB3};
 
-  Team() : teamName() {
+  Team() : teamId(0), teamName() {
   }
 
   virtual ~Team() throw() {}
 
+  int32_t teamId;
   std::string teamName;
+
+  void __set_teamId(const int32_t val) {
+    teamId = val;
+  }
 
   void __set_teamName(const std::string& val) {
     teamName = val;
@@ -38,6 +45,8 @@ class Team {
 
   bool operator == (const Team & rhs) const
   {
+    if (!(teamId == rhs.teamId))
+      return false;
     if (!(teamName == rhs.teamName))
       return false;
     return true;
@@ -54,6 +63,108 @@ class Team {
 };
 
 void swap(Team &a, Team &b);
+
+
+class Player {
+ public:
+
+  static const char* ascii_fingerprint; // = "07A9615F837F7D0A952B595DD3020972";
+  static const uint8_t binary_fingerprint[16]; // = {0x07,0xA9,0x61,0x5F,0x83,0x7F,0x7D,0x0A,0x95,0x2B,0x59,0x5D,0xD3,0x02,0x09,0x72};
+
+  Player() : playerFirstName(), playerLastName() {
+  }
+
+  virtual ~Player() throw() {}
+
+  std::string playerFirstName;
+  std::string playerLastName;
+
+  void __set_playerFirstName(const std::string& val) {
+    playerFirstName = val;
+  }
+
+  void __set_playerLastName(const std::string& val) {
+    playerLastName = val;
+  }
+
+  bool operator == (const Player & rhs) const
+  {
+    if (!(playerFirstName == rhs.playerFirstName))
+      return false;
+    if (!(playerLastName == rhs.playerLastName))
+      return false;
+    return true;
+  }
+  bool operator != (const Player &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const Player & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+void swap(Player &a, Player &b);
+
+
+class PlayerAttributes {
+ public:
+
+  static const char* ascii_fingerprint; // = "154BB42C2FFD70F8B3993568C50C5613";
+  static const uint8_t binary_fingerprint[16]; // = {0x15,0x4B,0xB4,0x2C,0x2F,0xFD,0x70,0xF8,0xB3,0x99,0x35,0x68,0xC5,0x0C,0x56,0x13};
+
+  PlayerAttributes() : passesSuccess(0), passesFail(0), shotsOnTarget(0), shotsOffTarget(0) {
+  }
+
+  virtual ~PlayerAttributes() throw() {}
+
+  int32_t passesSuccess;
+  int32_t passesFail;
+  int32_t shotsOnTarget;
+  int32_t shotsOffTarget;
+
+  void __set_passesSuccess(const int32_t val) {
+    passesSuccess = val;
+  }
+
+  void __set_passesFail(const int32_t val) {
+    passesFail = val;
+  }
+
+  void __set_shotsOnTarget(const int32_t val) {
+    shotsOnTarget = val;
+  }
+
+  void __set_shotsOffTarget(const int32_t val) {
+    shotsOffTarget = val;
+  }
+
+  bool operator == (const PlayerAttributes & rhs) const
+  {
+    if (!(passesSuccess == rhs.passesSuccess))
+      return false;
+    if (!(passesFail == rhs.passesFail))
+      return false;
+    if (!(shotsOnTarget == rhs.shotsOnTarget))
+      return false;
+    if (!(shotsOffTarget == rhs.shotsOffTarget))
+      return false;
+    return true;
+  }
+  bool operator != (const PlayerAttributes &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const PlayerAttributes & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+void swap(PlayerAttributes &a, PlayerAttributes &b);
 
 } // namespace
 

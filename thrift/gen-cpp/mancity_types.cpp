@@ -10,8 +10,8 @@
 
 namespace mancity {
 
-const char* Team::ascii_fingerprint = "EFB929595D312AC8F305D5A794CFEDA1";
-const uint8_t Team::binary_fingerprint[16] = {0xEF,0xB9,0x29,0x59,0x5D,0x31,0x2A,0xC8,0xF3,0x05,0xD5,0xA7,0x94,0xCF,0xED,0xA1};
+const char* Team::ascii_fingerprint = "3F5FC93B338687BC7235B1AB103F47B3";
+const uint8_t Team::binary_fingerprint[16] = {0x3F,0x5F,0xC9,0x3B,0x33,0x86,0x87,0xBC,0x72,0x35,0xB1,0xAB,0x10,0x3F,0x47,0xB3};
 
 uint32_t Team::read(::apache::thrift::protocol::TProtocol* iprot) {
 
@@ -24,6 +24,7 @@ uint32_t Team::read(::apache::thrift::protocol::TProtocol* iprot) {
 
   using ::apache::thrift::protocol::TProtocolException;
 
+  bool isset_teamId = false;
   bool isset_teamName = false;
 
   while (true)
@@ -35,6 +36,14 @@ uint32_t Team::read(::apache::thrift::protocol::TProtocol* iprot) {
     switch (fid)
     {
       case 1:
+        if (ftype == ::apache::thrift::protocol::T_I32) {
+          xfer += iprot->readI32(this->teamId);
+          isset_teamId = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      case 2:
         if (ftype == ::apache::thrift::protocol::T_STRING) {
           xfer += iprot->readString(this->teamName);
           isset_teamName = true;
@@ -51,6 +60,8 @@ uint32_t Team::read(::apache::thrift::protocol::TProtocol* iprot) {
 
   xfer += iprot->readStructEnd();
 
+  if (!isset_teamId)
+    throw TProtocolException(TProtocolException::INVALID_DATA);
   if (!isset_teamName)
     throw TProtocolException(TProtocolException::INVALID_DATA);
   return xfer;
@@ -60,7 +71,11 @@ uint32_t Team::write(::apache::thrift::protocol::TProtocol* oprot) const {
   uint32_t xfer = 0;
   xfer += oprot->writeStructBegin("Team");
 
-  xfer += oprot->writeFieldBegin("teamName", ::apache::thrift::protocol::T_STRING, 1);
+  xfer += oprot->writeFieldBegin("teamId", ::apache::thrift::protocol::T_I32, 1);
+  xfer += oprot->writeI32(this->teamId);
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldBegin("teamName", ::apache::thrift::protocol::T_STRING, 2);
   xfer += oprot->writeString(this->teamName);
   xfer += oprot->writeFieldEnd();
 
@@ -71,7 +86,200 @@ uint32_t Team::write(::apache::thrift::protocol::TProtocol* oprot) const {
 
 void swap(Team &a, Team &b) {
   using ::std::swap;
+  swap(a.teamId, b.teamId);
   swap(a.teamName, b.teamName);
+}
+
+const char* Player::ascii_fingerprint = "07A9615F837F7D0A952B595DD3020972";
+const uint8_t Player::binary_fingerprint[16] = {0x07,0xA9,0x61,0x5F,0x83,0x7F,0x7D,0x0A,0x95,0x2B,0x59,0x5D,0xD3,0x02,0x09,0x72};
+
+uint32_t Player::read(::apache::thrift::protocol::TProtocol* iprot) {
+
+  uint32_t xfer = 0;
+  std::string fname;
+  ::apache::thrift::protocol::TType ftype;
+  int16_t fid;
+
+  xfer += iprot->readStructBegin(fname);
+
+  using ::apache::thrift::protocol::TProtocolException;
+
+  bool isset_playerFirstName = false;
+  bool isset_playerLastName = false;
+
+  while (true)
+  {
+    xfer += iprot->readFieldBegin(fname, ftype, fid);
+    if (ftype == ::apache::thrift::protocol::T_STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+        if (ftype == ::apache::thrift::protocol::T_STRING) {
+          xfer += iprot->readString(this->playerFirstName);
+          isset_playerFirstName = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      case 2:
+        if (ftype == ::apache::thrift::protocol::T_STRING) {
+          xfer += iprot->readString(this->playerLastName);
+          isset_playerLastName = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      default:
+        xfer += iprot->skip(ftype);
+        break;
+    }
+    xfer += iprot->readFieldEnd();
+  }
+
+  xfer += iprot->readStructEnd();
+
+  if (!isset_playerFirstName)
+    throw TProtocolException(TProtocolException::INVALID_DATA);
+  if (!isset_playerLastName)
+    throw TProtocolException(TProtocolException::INVALID_DATA);
+  return xfer;
+}
+
+uint32_t Player::write(::apache::thrift::protocol::TProtocol* oprot) const {
+  uint32_t xfer = 0;
+  xfer += oprot->writeStructBegin("Player");
+
+  xfer += oprot->writeFieldBegin("playerFirstName", ::apache::thrift::protocol::T_STRING, 1);
+  xfer += oprot->writeString(this->playerFirstName);
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldBegin("playerLastName", ::apache::thrift::protocol::T_STRING, 2);
+  xfer += oprot->writeString(this->playerLastName);
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldStop();
+  xfer += oprot->writeStructEnd();
+  return xfer;
+}
+
+void swap(Player &a, Player &b) {
+  using ::std::swap;
+  swap(a.playerFirstName, b.playerFirstName);
+  swap(a.playerLastName, b.playerLastName);
+}
+
+const char* PlayerAttributes::ascii_fingerprint = "154BB42C2FFD70F8B3993568C50C5613";
+const uint8_t PlayerAttributes::binary_fingerprint[16] = {0x15,0x4B,0xB4,0x2C,0x2F,0xFD,0x70,0xF8,0xB3,0x99,0x35,0x68,0xC5,0x0C,0x56,0x13};
+
+uint32_t PlayerAttributes::read(::apache::thrift::protocol::TProtocol* iprot) {
+
+  uint32_t xfer = 0;
+  std::string fname;
+  ::apache::thrift::protocol::TType ftype;
+  int16_t fid;
+
+  xfer += iprot->readStructBegin(fname);
+
+  using ::apache::thrift::protocol::TProtocolException;
+
+  bool isset_passesSuccess = false;
+  bool isset_passesFail = false;
+  bool isset_shotsOnTarget = false;
+  bool isset_shotsOffTarget = false;
+
+  while (true)
+  {
+    xfer += iprot->readFieldBegin(fname, ftype, fid);
+    if (ftype == ::apache::thrift::protocol::T_STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+        if (ftype == ::apache::thrift::protocol::T_I32) {
+          xfer += iprot->readI32(this->passesSuccess);
+          isset_passesSuccess = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      case 2:
+        if (ftype == ::apache::thrift::protocol::T_I32) {
+          xfer += iprot->readI32(this->passesFail);
+          isset_passesFail = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      case 3:
+        if (ftype == ::apache::thrift::protocol::T_I32) {
+          xfer += iprot->readI32(this->shotsOnTarget);
+          isset_shotsOnTarget = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      case 4:
+        if (ftype == ::apache::thrift::protocol::T_I32) {
+          xfer += iprot->readI32(this->shotsOffTarget);
+          isset_shotsOffTarget = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      default:
+        xfer += iprot->skip(ftype);
+        break;
+    }
+    xfer += iprot->readFieldEnd();
+  }
+
+  xfer += iprot->readStructEnd();
+
+  if (!isset_passesSuccess)
+    throw TProtocolException(TProtocolException::INVALID_DATA);
+  if (!isset_passesFail)
+    throw TProtocolException(TProtocolException::INVALID_DATA);
+  if (!isset_shotsOnTarget)
+    throw TProtocolException(TProtocolException::INVALID_DATA);
+  if (!isset_shotsOffTarget)
+    throw TProtocolException(TProtocolException::INVALID_DATA);
+  return xfer;
+}
+
+uint32_t PlayerAttributes::write(::apache::thrift::protocol::TProtocol* oprot) const {
+  uint32_t xfer = 0;
+  xfer += oprot->writeStructBegin("PlayerAttributes");
+
+  xfer += oprot->writeFieldBegin("passesSuccess", ::apache::thrift::protocol::T_I32, 1);
+  xfer += oprot->writeI32(this->passesSuccess);
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldBegin("passesFail", ::apache::thrift::protocol::T_I32, 2);
+  xfer += oprot->writeI32(this->passesFail);
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldBegin("shotsOnTarget", ::apache::thrift::protocol::T_I32, 3);
+  xfer += oprot->writeI32(this->shotsOnTarget);
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldBegin("shotsOffTarget", ::apache::thrift::protocol::T_I32, 4);
+  xfer += oprot->writeI32(this->shotsOffTarget);
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldStop();
+  xfer += oprot->writeStructEnd();
+  return xfer;
+}
+
+void swap(PlayerAttributes &a, PlayerAttributes &b) {
+  using ::std::swap;
+  swap(a.passesSuccess, b.passesSuccess);
+  swap(a.passesFail, b.passesFail);
+  swap(a.shotsOnTarget, b.shotsOnTarget);
+  swap(a.shotsOffTarget, b.shotsOffTarget);
 }
 
 } // namespace

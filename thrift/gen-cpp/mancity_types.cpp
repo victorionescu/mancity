@@ -24,8 +24,8 @@ uint32_t Team::read(::apache::thrift::protocol::TProtocol* iprot) {
 
   using ::apache::thrift::protocol::TProtocolException;
 
-  bool isset_teamId = false;
-  bool isset_teamName = false;
+  bool isset_id = false;
+  bool isset_name = false;
 
   while (true)
   {
@@ -37,16 +37,16 @@ uint32_t Team::read(::apache::thrift::protocol::TProtocol* iprot) {
     {
       case 1:
         if (ftype == ::apache::thrift::protocol::T_I32) {
-          xfer += iprot->readI32(this->teamId);
-          isset_teamId = true;
+          xfer += iprot->readI32(this->id);
+          isset_id = true;
         } else {
           xfer += iprot->skip(ftype);
         }
         break;
       case 2:
         if (ftype == ::apache::thrift::protocol::T_STRING) {
-          xfer += iprot->readString(this->teamName);
-          isset_teamName = true;
+          xfer += iprot->readString(this->name);
+          isset_name = true;
         } else {
           xfer += iprot->skip(ftype);
         }
@@ -60,9 +60,9 @@ uint32_t Team::read(::apache::thrift::protocol::TProtocol* iprot) {
 
   xfer += iprot->readStructEnd();
 
-  if (!isset_teamId)
+  if (!isset_id)
     throw TProtocolException(TProtocolException::INVALID_DATA);
-  if (!isset_teamName)
+  if (!isset_name)
     throw TProtocolException(TProtocolException::INVALID_DATA);
   return xfer;
 }
@@ -71,12 +71,12 @@ uint32_t Team::write(::apache::thrift::protocol::TProtocol* oprot) const {
   uint32_t xfer = 0;
   xfer += oprot->writeStructBegin("Team");
 
-  xfer += oprot->writeFieldBegin("teamId", ::apache::thrift::protocol::T_I32, 1);
-  xfer += oprot->writeI32(this->teamId);
+  xfer += oprot->writeFieldBegin("id", ::apache::thrift::protocol::T_I32, 1);
+  xfer += oprot->writeI32(this->id);
   xfer += oprot->writeFieldEnd();
 
-  xfer += oprot->writeFieldBegin("teamName", ::apache::thrift::protocol::T_STRING, 2);
-  xfer += oprot->writeString(this->teamName);
+  xfer += oprot->writeFieldBegin("name", ::apache::thrift::protocol::T_STRING, 2);
+  xfer += oprot->writeString(this->name);
   xfer += oprot->writeFieldEnd();
 
   xfer += oprot->writeFieldStop();
@@ -86,12 +86,12 @@ uint32_t Team::write(::apache::thrift::protocol::TProtocol* oprot) const {
 
 void swap(Team &a, Team &b) {
   using ::std::swap;
-  swap(a.teamId, b.teamId);
-  swap(a.teamName, b.teamName);
+  swap(a.id, b.id);
+  swap(a.name, b.name);
 }
 
-const char* Player::ascii_fingerprint = "07A9615F837F7D0A952B595DD3020972";
-const uint8_t Player::binary_fingerprint[16] = {0x07,0xA9,0x61,0x5F,0x83,0x7F,0x7D,0x0A,0x95,0x2B,0x59,0x5D,0xD3,0x02,0x09,0x72};
+const char* Player::ascii_fingerprint = "3368C2F81F2FEF71F11EDACDB2A3ECEF";
+const uint8_t Player::binary_fingerprint[16] = {0x33,0x68,0xC2,0xF8,0x1F,0x2F,0xEF,0x71,0xF1,0x1E,0xDA,0xCD,0xB2,0xA3,0xEC,0xEF};
 
 uint32_t Player::read(::apache::thrift::protocol::TProtocol* iprot) {
 
@@ -104,8 +104,9 @@ uint32_t Player::read(::apache::thrift::protocol::TProtocol* iprot) {
 
   using ::apache::thrift::protocol::TProtocolException;
 
-  bool isset_playerFirstName = false;
-  bool isset_playerLastName = false;
+  bool isset_id = false;
+  bool isset_firstName = false;
+  bool isset_lastName = false;
 
   while (true)
   {
@@ -116,17 +117,25 @@ uint32_t Player::read(::apache::thrift::protocol::TProtocol* iprot) {
     switch (fid)
     {
       case 1:
-        if (ftype == ::apache::thrift::protocol::T_STRING) {
-          xfer += iprot->readString(this->playerFirstName);
-          isset_playerFirstName = true;
+        if (ftype == ::apache::thrift::protocol::T_I32) {
+          xfer += iprot->readI32(this->id);
+          isset_id = true;
         } else {
           xfer += iprot->skip(ftype);
         }
         break;
       case 2:
         if (ftype == ::apache::thrift::protocol::T_STRING) {
-          xfer += iprot->readString(this->playerLastName);
-          isset_playerLastName = true;
+          xfer += iprot->readString(this->firstName);
+          isset_firstName = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      case 3:
+        if (ftype == ::apache::thrift::protocol::T_STRING) {
+          xfer += iprot->readString(this->lastName);
+          isset_lastName = true;
         } else {
           xfer += iprot->skip(ftype);
         }
@@ -140,9 +149,11 @@ uint32_t Player::read(::apache::thrift::protocol::TProtocol* iprot) {
 
   xfer += iprot->readStructEnd();
 
-  if (!isset_playerFirstName)
+  if (!isset_id)
     throw TProtocolException(TProtocolException::INVALID_DATA);
-  if (!isset_playerLastName)
+  if (!isset_firstName)
+    throw TProtocolException(TProtocolException::INVALID_DATA);
+  if (!isset_lastName)
     throw TProtocolException(TProtocolException::INVALID_DATA);
   return xfer;
 }
@@ -151,12 +162,16 @@ uint32_t Player::write(::apache::thrift::protocol::TProtocol* oprot) const {
   uint32_t xfer = 0;
   xfer += oprot->writeStructBegin("Player");
 
-  xfer += oprot->writeFieldBegin("playerFirstName", ::apache::thrift::protocol::T_STRING, 1);
-  xfer += oprot->writeString(this->playerFirstName);
+  xfer += oprot->writeFieldBegin("id", ::apache::thrift::protocol::T_I32, 1);
+  xfer += oprot->writeI32(this->id);
   xfer += oprot->writeFieldEnd();
 
-  xfer += oprot->writeFieldBegin("playerLastName", ::apache::thrift::protocol::T_STRING, 2);
-  xfer += oprot->writeString(this->playerLastName);
+  xfer += oprot->writeFieldBegin("firstName", ::apache::thrift::protocol::T_STRING, 2);
+  xfer += oprot->writeString(this->firstName);
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldBegin("lastName", ::apache::thrift::protocol::T_STRING, 3);
+  xfer += oprot->writeString(this->lastName);
   xfer += oprot->writeFieldEnd();
 
   xfer += oprot->writeFieldStop();
@@ -166,14 +181,15 @@ uint32_t Player::write(::apache::thrift::protocol::TProtocol* oprot) const {
 
 void swap(Player &a, Player &b) {
   using ::std::swap;
-  swap(a.playerFirstName, b.playerFirstName);
-  swap(a.playerLastName, b.playerLastName);
+  swap(a.id, b.id);
+  swap(a.firstName, b.firstName);
+  swap(a.lastName, b.lastName);
 }
 
-const char* PlayerAttributes::ascii_fingerprint = "154BB42C2FFD70F8B3993568C50C5613";
-const uint8_t PlayerAttributes::binary_fingerprint[16] = {0x15,0x4B,0xB4,0x2C,0x2F,0xFD,0x70,0xF8,0xB3,0x99,0x35,0x68,0xC5,0x0C,0x56,0x13};
+const char* Match::ascii_fingerprint = "6435B39C87AB0E30F30BEDEFD7328C0D";
+const uint8_t Match::binary_fingerprint[16] = {0x64,0x35,0xB3,0x9C,0x87,0xAB,0x0E,0x30,0xF3,0x0B,0xED,0xEF,0xD7,0x32,0x8C,0x0D};
 
-uint32_t PlayerAttributes::read(::apache::thrift::protocol::TProtocol* iprot) {
+uint32_t Match::read(::apache::thrift::protocol::TProtocol* iprot) {
 
   uint32_t xfer = 0;
   std::string fname;
@@ -184,10 +200,9 @@ uint32_t PlayerAttributes::read(::apache::thrift::protocol::TProtocol* iprot) {
 
   using ::apache::thrift::protocol::TProtocolException;
 
-  bool isset_passesSuccess = false;
-  bool isset_passesFail = false;
-  bool isset_shotsOnTarget = false;
-  bool isset_shotsOffTarget = false;
+  bool isset_id = false;
+  bool isset_homeId = false;
+  bool isset_awayId = false;
 
   while (true)
   {
@@ -199,32 +214,24 @@ uint32_t PlayerAttributes::read(::apache::thrift::protocol::TProtocol* iprot) {
     {
       case 1:
         if (ftype == ::apache::thrift::protocol::T_I32) {
-          xfer += iprot->readI32(this->passesSuccess);
-          isset_passesSuccess = true;
+          xfer += iprot->readI32(this->id);
+          isset_id = true;
         } else {
           xfer += iprot->skip(ftype);
         }
         break;
       case 2:
         if (ftype == ::apache::thrift::protocol::T_I32) {
-          xfer += iprot->readI32(this->passesFail);
-          isset_passesFail = true;
+          xfer += iprot->readI32(this->homeId);
+          isset_homeId = true;
         } else {
           xfer += iprot->skip(ftype);
         }
         break;
       case 3:
         if (ftype == ::apache::thrift::protocol::T_I32) {
-          xfer += iprot->readI32(this->shotsOnTarget);
-          isset_shotsOnTarget = true;
-        } else {
-          xfer += iprot->skip(ftype);
-        }
-        break;
-      case 4:
-        if (ftype == ::apache::thrift::protocol::T_I32) {
-          xfer += iprot->readI32(this->shotsOffTarget);
-          isset_shotsOffTarget = true;
+          xfer += iprot->readI32(this->awayId);
+          isset_awayId = true;
         } else {
           xfer += iprot->skip(ftype);
         }
@@ -238,35 +245,29 @@ uint32_t PlayerAttributes::read(::apache::thrift::protocol::TProtocol* iprot) {
 
   xfer += iprot->readStructEnd();
 
-  if (!isset_passesSuccess)
+  if (!isset_id)
     throw TProtocolException(TProtocolException::INVALID_DATA);
-  if (!isset_passesFail)
+  if (!isset_homeId)
     throw TProtocolException(TProtocolException::INVALID_DATA);
-  if (!isset_shotsOnTarget)
-    throw TProtocolException(TProtocolException::INVALID_DATA);
-  if (!isset_shotsOffTarget)
+  if (!isset_awayId)
     throw TProtocolException(TProtocolException::INVALID_DATA);
   return xfer;
 }
 
-uint32_t PlayerAttributes::write(::apache::thrift::protocol::TProtocol* oprot) const {
+uint32_t Match::write(::apache::thrift::protocol::TProtocol* oprot) const {
   uint32_t xfer = 0;
-  xfer += oprot->writeStructBegin("PlayerAttributes");
+  xfer += oprot->writeStructBegin("Match");
 
-  xfer += oprot->writeFieldBegin("passesSuccess", ::apache::thrift::protocol::T_I32, 1);
-  xfer += oprot->writeI32(this->passesSuccess);
+  xfer += oprot->writeFieldBegin("id", ::apache::thrift::protocol::T_I32, 1);
+  xfer += oprot->writeI32(this->id);
   xfer += oprot->writeFieldEnd();
 
-  xfer += oprot->writeFieldBegin("passesFail", ::apache::thrift::protocol::T_I32, 2);
-  xfer += oprot->writeI32(this->passesFail);
+  xfer += oprot->writeFieldBegin("homeId", ::apache::thrift::protocol::T_I32, 2);
+  xfer += oprot->writeI32(this->homeId);
   xfer += oprot->writeFieldEnd();
 
-  xfer += oprot->writeFieldBegin("shotsOnTarget", ::apache::thrift::protocol::T_I32, 3);
-  xfer += oprot->writeI32(this->shotsOnTarget);
-  xfer += oprot->writeFieldEnd();
-
-  xfer += oprot->writeFieldBegin("shotsOffTarget", ::apache::thrift::protocol::T_I32, 4);
-  xfer += oprot->writeI32(this->shotsOffTarget);
+  xfer += oprot->writeFieldBegin("awayId", ::apache::thrift::protocol::T_I32, 3);
+  xfer += oprot->writeI32(this->awayId);
   xfer += oprot->writeFieldEnd();
 
   xfer += oprot->writeFieldStop();
@@ -274,12 +275,196 @@ uint32_t PlayerAttributes::write(::apache::thrift::protocol::TProtocol* oprot) c
   return xfer;
 }
 
-void swap(PlayerAttributes &a, PlayerAttributes &b) {
+void swap(Match &a, Match &b) {
   using ::std::swap;
-  swap(a.passesSuccess, b.passesSuccess);
-  swap(a.passesFail, b.passesFail);
-  swap(a.shotsOnTarget, b.shotsOnTarget);
-  swap(a.shotsOffTarget, b.shotsOffTarget);
+  swap(a.id, b.id);
+  swap(a.homeId, b.homeId);
+  swap(a.awayId, b.awayId);
+}
+
+const char* Event::ascii_fingerprint = "E3B810029A483CFDE5A201B730427042";
+const uint8_t Event::binary_fingerprint[16] = {0xE3,0xB8,0x10,0x02,0x9A,0x48,0x3C,0xFD,0xE5,0xA2,0x01,0xB7,0x30,0x42,0x70,0x42};
+
+uint32_t Event::read(::apache::thrift::protocol::TProtocol* iprot) {
+
+  uint32_t xfer = 0;
+  std::string fname;
+  ::apache::thrift::protocol::TType ftype;
+  int16_t fid;
+
+  xfer += iprot->readStructBegin(fname);
+
+  using ::apache::thrift::protocol::TProtocolException;
+
+  bool isset_id = false;
+  bool isset_eventType = false;
+  bool isset_playerId = false;
+  bool isset_startX = false;
+  bool isset_startY = false;
+
+  while (true)
+  {
+    xfer += iprot->readFieldBegin(fname, ftype, fid);
+    if (ftype == ::apache::thrift::protocol::T_STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+        if (ftype == ::apache::thrift::protocol::T_I32) {
+          xfer += iprot->readI32(this->id);
+          isset_id = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      case 2:
+        if (ftype == ::apache::thrift::protocol::T_I32) {
+          xfer += iprot->readI32(this->eventType);
+          isset_eventType = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      case 3:
+        if (ftype == ::apache::thrift::protocol::T_I32) {
+          xfer += iprot->readI32(this->playerId);
+          isset_playerId = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      case 4:
+        if (ftype == ::apache::thrift::protocol::T_DOUBLE) {
+          xfer += iprot->readDouble(this->startX);
+          isset_startX = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      case 5:
+        if (ftype == ::apache::thrift::protocol::T_DOUBLE) {
+          xfer += iprot->readDouble(this->startY);
+          isset_startY = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      case 6:
+        if (ftype == ::apache::thrift::protocol::T_DOUBLE) {
+          xfer += iprot->readDouble(this->endX);
+          this->__isset.endX = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      case 7:
+        if (ftype == ::apache::thrift::protocol::T_DOUBLE) {
+          xfer += iprot->readDouble(this->endY);
+          this->__isset.endY = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      case 8:
+        if (ftype == ::apache::thrift::protocol::T_DOUBLE) {
+          xfer += iprot->readDouble(this->goalY);
+          this->__isset.goalY = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      case 9:
+        if (ftype == ::apache::thrift::protocol::T_DOUBLE) {
+          xfer += iprot->readDouble(this->goalZ);
+          this->__isset.goalZ = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      default:
+        xfer += iprot->skip(ftype);
+        break;
+    }
+    xfer += iprot->readFieldEnd();
+  }
+
+  xfer += iprot->readStructEnd();
+
+  if (!isset_id)
+    throw TProtocolException(TProtocolException::INVALID_DATA);
+  if (!isset_eventType)
+    throw TProtocolException(TProtocolException::INVALID_DATA);
+  if (!isset_playerId)
+    throw TProtocolException(TProtocolException::INVALID_DATA);
+  if (!isset_startX)
+    throw TProtocolException(TProtocolException::INVALID_DATA);
+  if (!isset_startY)
+    throw TProtocolException(TProtocolException::INVALID_DATA);
+  return xfer;
+}
+
+uint32_t Event::write(::apache::thrift::protocol::TProtocol* oprot) const {
+  uint32_t xfer = 0;
+  xfer += oprot->writeStructBegin("Event");
+
+  xfer += oprot->writeFieldBegin("id", ::apache::thrift::protocol::T_I32, 1);
+  xfer += oprot->writeI32(this->id);
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldBegin("eventType", ::apache::thrift::protocol::T_I32, 2);
+  xfer += oprot->writeI32(this->eventType);
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldBegin("playerId", ::apache::thrift::protocol::T_I32, 3);
+  xfer += oprot->writeI32(this->playerId);
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldBegin("startX", ::apache::thrift::protocol::T_DOUBLE, 4);
+  xfer += oprot->writeDouble(this->startX);
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldBegin("startY", ::apache::thrift::protocol::T_DOUBLE, 5);
+  xfer += oprot->writeDouble(this->startY);
+  xfer += oprot->writeFieldEnd();
+
+  if (this->__isset.endX) {
+    xfer += oprot->writeFieldBegin("endX", ::apache::thrift::protocol::T_DOUBLE, 6);
+    xfer += oprot->writeDouble(this->endX);
+    xfer += oprot->writeFieldEnd();
+  }
+  if (this->__isset.endY) {
+    xfer += oprot->writeFieldBegin("endY", ::apache::thrift::protocol::T_DOUBLE, 7);
+    xfer += oprot->writeDouble(this->endY);
+    xfer += oprot->writeFieldEnd();
+  }
+  if (this->__isset.goalY) {
+    xfer += oprot->writeFieldBegin("goalY", ::apache::thrift::protocol::T_DOUBLE, 8);
+    xfer += oprot->writeDouble(this->goalY);
+    xfer += oprot->writeFieldEnd();
+  }
+  if (this->__isset.goalZ) {
+    xfer += oprot->writeFieldBegin("goalZ", ::apache::thrift::protocol::T_DOUBLE, 9);
+    xfer += oprot->writeDouble(this->goalZ);
+    xfer += oprot->writeFieldEnd();
+  }
+  xfer += oprot->writeFieldStop();
+  xfer += oprot->writeStructEnd();
+  return xfer;
+}
+
+void swap(Event &a, Event &b) {
+  using ::std::swap;
+  swap(a.id, b.id);
+  swap(a.eventType, b.eventType);
+  swap(a.playerId, b.playerId);
+  swap(a.startX, b.startX);
+  swap(a.startY, b.startY);
+  swap(a.endX, b.endX);
+  swap(a.endY, b.endY);
+  swap(a.goalY, b.goalY);
+  swap(a.goalZ, b.goalZ);
+  swap(a.__isset, b.__isset);
 }
 
 } // namespace

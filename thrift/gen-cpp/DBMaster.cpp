@@ -118,7 +118,7 @@ uint32_t DBMaster_ping_presult::read(::apache::thrift::protocol::TProtocol* ipro
   return xfer;
 }
 
-uint32_t DBMaster_allTeams_args::read(::apache::thrift::protocol::TProtocol* iprot) {
+uint32_t DBMaster_getAllMatches_args::read(::apache::thrift::protocol::TProtocol* iprot) {
 
   uint32_t xfer = 0;
   std::string fname;
@@ -145,25 +145,25 @@ uint32_t DBMaster_allTeams_args::read(::apache::thrift::protocol::TProtocol* ipr
   return xfer;
 }
 
-uint32_t DBMaster_allTeams_args::write(::apache::thrift::protocol::TProtocol* oprot) const {
+uint32_t DBMaster_getAllMatches_args::write(::apache::thrift::protocol::TProtocol* oprot) const {
   uint32_t xfer = 0;
-  xfer += oprot->writeStructBegin("DBMaster_allTeams_args");
+  xfer += oprot->writeStructBegin("DBMaster_getAllMatches_args");
 
   xfer += oprot->writeFieldStop();
   xfer += oprot->writeStructEnd();
   return xfer;
 }
 
-uint32_t DBMaster_allTeams_pargs::write(::apache::thrift::protocol::TProtocol* oprot) const {
+uint32_t DBMaster_getAllMatches_pargs::write(::apache::thrift::protocol::TProtocol* oprot) const {
   uint32_t xfer = 0;
-  xfer += oprot->writeStructBegin("DBMaster_allTeams_pargs");
+  xfer += oprot->writeStructBegin("DBMaster_getAllMatches_pargs");
 
   xfer += oprot->writeFieldStop();
   xfer += oprot->writeStructEnd();
   return xfer;
 }
 
-uint32_t DBMaster_allTeams_result::read(::apache::thrift::protocol::TProtocol* iprot) {
+uint32_t DBMaster_getAllMatches_result::read(::apache::thrift::protocol::TProtocol* iprot) {
 
   uint32_t xfer = 0;
   std::string fname;
@@ -187,14 +187,14 @@ uint32_t DBMaster_allTeams_result::read(::apache::thrift::protocol::TProtocol* i
         if (ftype == ::apache::thrift::protocol::T_LIST) {
           {
             this->success.clear();
-            uint32_t _size22;
-            ::apache::thrift::protocol::TType _etype25;
-            xfer += iprot->readListBegin(_etype25, _size22);
-            this->success.resize(_size22);
-            uint32_t _i26;
-            for (_i26 = 0; _i26 < _size22; ++_i26)
+            uint32_t _size47;
+            ::apache::thrift::protocol::TType _etype50;
+            xfer += iprot->readListBegin(_etype50, _size47);
+            this->success.resize(_size47);
+            uint32_t _i51;
+            for (_i51 = 0; _i51 < _size47; ++_i51)
             {
-              xfer += this->success[_i26].read(iprot);
+              xfer += this->success[_i51].read(iprot);
             }
             xfer += iprot->readListEnd();
           }
@@ -215,20 +215,20 @@ uint32_t DBMaster_allTeams_result::read(::apache::thrift::protocol::TProtocol* i
   return xfer;
 }
 
-uint32_t DBMaster_allTeams_result::write(::apache::thrift::protocol::TProtocol* oprot) const {
+uint32_t DBMaster_getAllMatches_result::write(::apache::thrift::protocol::TProtocol* oprot) const {
 
   uint32_t xfer = 0;
 
-  xfer += oprot->writeStructBegin("DBMaster_allTeams_result");
+  xfer += oprot->writeStructBegin("DBMaster_getAllMatches_result");
 
   if (this->__isset.success) {
     xfer += oprot->writeFieldBegin("success", ::apache::thrift::protocol::T_LIST, 0);
     {
       xfer += oprot->writeListBegin(::apache::thrift::protocol::T_STRUCT, static_cast<uint32_t>(this->success.size()));
-      std::vector<Team> ::const_iterator _iter27;
-      for (_iter27 = this->success.begin(); _iter27 != this->success.end(); ++_iter27)
+      std::vector<Match> ::const_iterator _iter52;
+      for (_iter52 = this->success.begin(); _iter52 != this->success.end(); ++_iter52)
       {
-        xfer += (*_iter27).write(oprot);
+        xfer += (*_iter52).write(oprot);
       }
       xfer += oprot->writeListEnd();
     }
@@ -239,7 +239,7 @@ uint32_t DBMaster_allTeams_result::write(::apache::thrift::protocol::TProtocol* 
   return xfer;
 }
 
-uint32_t DBMaster_allTeams_presult::read(::apache::thrift::protocol::TProtocol* iprot) {
+uint32_t DBMaster_getAllMatches_presult::read(::apache::thrift::protocol::TProtocol* iprot) {
 
   uint32_t xfer = 0;
   std::string fname;
@@ -263,14 +263,14 @@ uint32_t DBMaster_allTeams_presult::read(::apache::thrift::protocol::TProtocol* 
         if (ftype == ::apache::thrift::protocol::T_LIST) {
           {
             (*(this->success)).clear();
-            uint32_t _size28;
-            ::apache::thrift::protocol::TType _etype31;
-            xfer += iprot->readListBegin(_etype31, _size28);
-            (*(this->success)).resize(_size28);
-            uint32_t _i32;
-            for (_i32 = 0; _i32 < _size28; ++_i32)
+            uint32_t _size53;
+            ::apache::thrift::protocol::TType _etype56;
+            xfer += iprot->readListBegin(_etype56, _size53);
+            (*(this->success)).resize(_size53);
+            uint32_t _i57;
+            for (_i57 = 0; _i57 < _size53; ++_i57)
             {
-              xfer += (*(this->success))[_i32].read(iprot);
+              xfer += (*(this->success))[_i57].read(iprot);
             }
             xfer += iprot->readListEnd();
           }
@@ -313,8 +313,8 @@ uint32_t DBMaster_teamPlayers_args::read(::apache::thrift::protocol::TProtocol* 
     {
       case 1:
         if (ftype == ::apache::thrift::protocol::T_I32) {
-          xfer += iprot->readI32(this->team_id);
-          this->__isset.team_id = true;
+          xfer += iprot->readI32(this->teamId);
+          this->__isset.teamId = true;
         } else {
           xfer += iprot->skip(ftype);
         }
@@ -335,8 +335,8 @@ uint32_t DBMaster_teamPlayers_args::write(::apache::thrift::protocol::TProtocol*
   uint32_t xfer = 0;
   xfer += oprot->writeStructBegin("DBMaster_teamPlayers_args");
 
-  xfer += oprot->writeFieldBegin("team_id", ::apache::thrift::protocol::T_I32, 1);
-  xfer += oprot->writeI32(this->team_id);
+  xfer += oprot->writeFieldBegin("teamId", ::apache::thrift::protocol::T_I32, 1);
+  xfer += oprot->writeI32(this->teamId);
   xfer += oprot->writeFieldEnd();
 
   xfer += oprot->writeFieldStop();
@@ -348,8 +348,8 @@ uint32_t DBMaster_teamPlayers_pargs::write(::apache::thrift::protocol::TProtocol
   uint32_t xfer = 0;
   xfer += oprot->writeStructBegin("DBMaster_teamPlayers_pargs");
 
-  xfer += oprot->writeFieldBegin("team_id", ::apache::thrift::protocol::T_I32, 1);
-  xfer += oprot->writeI32((*(this->team_id)));
+  xfer += oprot->writeFieldBegin("teamId", ::apache::thrift::protocol::T_I32, 1);
+  xfer += oprot->writeI32((*(this->teamId)));
   xfer += oprot->writeFieldEnd();
 
   xfer += oprot->writeFieldStop();
@@ -381,14 +381,14 @@ uint32_t DBMaster_teamPlayers_result::read(::apache::thrift::protocol::TProtocol
         if (ftype == ::apache::thrift::protocol::T_LIST) {
           {
             this->success.clear();
-            uint32_t _size33;
-            ::apache::thrift::protocol::TType _etype36;
-            xfer += iprot->readListBegin(_etype36, _size33);
-            this->success.resize(_size33);
-            uint32_t _i37;
-            for (_i37 = 0; _i37 < _size33; ++_i37)
+            uint32_t _size58;
+            ::apache::thrift::protocol::TType _etype61;
+            xfer += iprot->readListBegin(_etype61, _size58);
+            this->success.resize(_size58);
+            uint32_t _i62;
+            for (_i62 = 0; _i62 < _size58; ++_i62)
             {
-              xfer += this->success[_i37].read(iprot);
+              xfer += this->success[_i62].read(iprot);
             }
             xfer += iprot->readListEnd();
           }
@@ -419,10 +419,10 @@ uint32_t DBMaster_teamPlayers_result::write(::apache::thrift::protocol::TProtoco
     xfer += oprot->writeFieldBegin("success", ::apache::thrift::protocol::T_LIST, 0);
     {
       xfer += oprot->writeListBegin(::apache::thrift::protocol::T_STRUCT, static_cast<uint32_t>(this->success.size()));
-      std::vector<Player> ::const_iterator _iter38;
-      for (_iter38 = this->success.begin(); _iter38 != this->success.end(); ++_iter38)
+      std::vector<Player> ::const_iterator _iter63;
+      for (_iter63 = this->success.begin(); _iter63 != this->success.end(); ++_iter63)
       {
-        xfer += (*_iter38).write(oprot);
+        xfer += (*_iter63).write(oprot);
       }
       xfer += oprot->writeListEnd();
     }
@@ -457,195 +457,17 @@ uint32_t DBMaster_teamPlayers_presult::read(::apache::thrift::protocol::TProtoco
         if (ftype == ::apache::thrift::protocol::T_LIST) {
           {
             (*(this->success)).clear();
-            uint32_t _size39;
-            ::apache::thrift::protocol::TType _etype42;
-            xfer += iprot->readListBegin(_etype42, _size39);
-            (*(this->success)).resize(_size39);
-            uint32_t _i43;
-            for (_i43 = 0; _i43 < _size39; ++_i43)
+            uint32_t _size64;
+            ::apache::thrift::protocol::TType _etype67;
+            xfer += iprot->readListBegin(_etype67, _size64);
+            (*(this->success)).resize(_size64);
+            uint32_t _i68;
+            for (_i68 = 0; _i68 < _size64; ++_i68)
             {
-              xfer += (*(this->success))[_i43].read(iprot);
+              xfer += (*(this->success))[_i68].read(iprot);
             }
             xfer += iprot->readListEnd();
           }
-          this->__isset.success = true;
-        } else {
-          xfer += iprot->skip(ftype);
-        }
-        break;
-      default:
-        xfer += iprot->skip(ftype);
-        break;
-    }
-    xfer += iprot->readFieldEnd();
-  }
-
-  xfer += iprot->readStructEnd();
-
-  return xfer;
-}
-
-uint32_t DBMaster_playerAttributes_args::read(::apache::thrift::protocol::TProtocol* iprot) {
-
-  uint32_t xfer = 0;
-  std::string fname;
-  ::apache::thrift::protocol::TType ftype;
-  int16_t fid;
-
-  xfer += iprot->readStructBegin(fname);
-
-  using ::apache::thrift::protocol::TProtocolException;
-
-
-  while (true)
-  {
-    xfer += iprot->readFieldBegin(fname, ftype, fid);
-    if (ftype == ::apache::thrift::protocol::T_STOP) {
-      break;
-    }
-    switch (fid)
-    {
-      case 1:
-        if (ftype == ::apache::thrift::protocol::T_I32) {
-          xfer += iprot->readI32(this->team_id);
-          this->__isset.team_id = true;
-        } else {
-          xfer += iprot->skip(ftype);
-        }
-        break;
-      case 2:
-        if (ftype == ::apache::thrift::protocol::T_I32) {
-          xfer += iprot->readI32(this->player_id);
-          this->__isset.player_id = true;
-        } else {
-          xfer += iprot->skip(ftype);
-        }
-        break;
-      default:
-        xfer += iprot->skip(ftype);
-        break;
-    }
-    xfer += iprot->readFieldEnd();
-  }
-
-  xfer += iprot->readStructEnd();
-
-  return xfer;
-}
-
-uint32_t DBMaster_playerAttributes_args::write(::apache::thrift::protocol::TProtocol* oprot) const {
-  uint32_t xfer = 0;
-  xfer += oprot->writeStructBegin("DBMaster_playerAttributes_args");
-
-  xfer += oprot->writeFieldBegin("team_id", ::apache::thrift::protocol::T_I32, 1);
-  xfer += oprot->writeI32(this->team_id);
-  xfer += oprot->writeFieldEnd();
-
-  xfer += oprot->writeFieldBegin("player_id", ::apache::thrift::protocol::T_I32, 2);
-  xfer += oprot->writeI32(this->player_id);
-  xfer += oprot->writeFieldEnd();
-
-  xfer += oprot->writeFieldStop();
-  xfer += oprot->writeStructEnd();
-  return xfer;
-}
-
-uint32_t DBMaster_playerAttributes_pargs::write(::apache::thrift::protocol::TProtocol* oprot) const {
-  uint32_t xfer = 0;
-  xfer += oprot->writeStructBegin("DBMaster_playerAttributes_pargs");
-
-  xfer += oprot->writeFieldBegin("team_id", ::apache::thrift::protocol::T_I32, 1);
-  xfer += oprot->writeI32((*(this->team_id)));
-  xfer += oprot->writeFieldEnd();
-
-  xfer += oprot->writeFieldBegin("player_id", ::apache::thrift::protocol::T_I32, 2);
-  xfer += oprot->writeI32((*(this->player_id)));
-  xfer += oprot->writeFieldEnd();
-
-  xfer += oprot->writeFieldStop();
-  xfer += oprot->writeStructEnd();
-  return xfer;
-}
-
-uint32_t DBMaster_playerAttributes_result::read(::apache::thrift::protocol::TProtocol* iprot) {
-
-  uint32_t xfer = 0;
-  std::string fname;
-  ::apache::thrift::protocol::TType ftype;
-  int16_t fid;
-
-  xfer += iprot->readStructBegin(fname);
-
-  using ::apache::thrift::protocol::TProtocolException;
-
-
-  while (true)
-  {
-    xfer += iprot->readFieldBegin(fname, ftype, fid);
-    if (ftype == ::apache::thrift::protocol::T_STOP) {
-      break;
-    }
-    switch (fid)
-    {
-      case 0:
-        if (ftype == ::apache::thrift::protocol::T_STRUCT) {
-          xfer += this->success.read(iprot);
-          this->__isset.success = true;
-        } else {
-          xfer += iprot->skip(ftype);
-        }
-        break;
-      default:
-        xfer += iprot->skip(ftype);
-        break;
-    }
-    xfer += iprot->readFieldEnd();
-  }
-
-  xfer += iprot->readStructEnd();
-
-  return xfer;
-}
-
-uint32_t DBMaster_playerAttributes_result::write(::apache::thrift::protocol::TProtocol* oprot) const {
-
-  uint32_t xfer = 0;
-
-  xfer += oprot->writeStructBegin("DBMaster_playerAttributes_result");
-
-  if (this->__isset.success) {
-    xfer += oprot->writeFieldBegin("success", ::apache::thrift::protocol::T_STRUCT, 0);
-    xfer += this->success.write(oprot);
-    xfer += oprot->writeFieldEnd();
-  }
-  xfer += oprot->writeFieldStop();
-  xfer += oprot->writeStructEnd();
-  return xfer;
-}
-
-uint32_t DBMaster_playerAttributes_presult::read(::apache::thrift::protocol::TProtocol* iprot) {
-
-  uint32_t xfer = 0;
-  std::string fname;
-  ::apache::thrift::protocol::TType ftype;
-  int16_t fid;
-
-  xfer += iprot->readStructBegin(fname);
-
-  using ::apache::thrift::protocol::TProtocolException;
-
-
-  while (true)
-  {
-    xfer += iprot->readFieldBegin(fname, ftype, fid);
-    if (ftype == ::apache::thrift::protocol::T_STOP) {
-      break;
-    }
-    switch (fid)
-    {
-      case 0:
-        if (ftype == ::apache::thrift::protocol::T_STRUCT) {
-          xfer += (*(this->success)).read(iprot);
           this->__isset.success = true;
         } else {
           xfer += iprot->skip(ftype);
@@ -715,18 +537,18 @@ void DBMasterClient::recv_ping()
   return;
 }
 
-void DBMasterClient::allTeams(TeamList& _return)
+void DBMasterClient::getAllMatches(MatchList& _return)
 {
-  send_allTeams();
-  recv_allTeams(_return);
+  send_getAllMatches();
+  recv_getAllMatches(_return);
 }
 
-void DBMasterClient::send_allTeams()
+void DBMasterClient::send_getAllMatches()
 {
   int32_t cseqid = 0;
-  oprot_->writeMessageBegin("allTeams", ::apache::thrift::protocol::T_CALL, cseqid);
+  oprot_->writeMessageBegin("getAllMatches", ::apache::thrift::protocol::T_CALL, cseqid);
 
-  DBMaster_allTeams_pargs args;
+  DBMaster_getAllMatches_pargs args;
   args.write(oprot_);
 
   oprot_->writeMessageEnd();
@@ -734,7 +556,7 @@ void DBMasterClient::send_allTeams()
   oprot_->getTransport()->flush();
 }
 
-void DBMasterClient::recv_allTeams(TeamList& _return)
+void DBMasterClient::recv_getAllMatches(MatchList& _return)
 {
 
   int32_t rseqid = 0;
@@ -754,12 +576,12 @@ void DBMasterClient::recv_allTeams(TeamList& _return)
     iprot_->readMessageEnd();
     iprot_->getTransport()->readEnd();
   }
-  if (fname.compare("allTeams") != 0) {
+  if (fname.compare("getAllMatches") != 0) {
     iprot_->skip(::apache::thrift::protocol::T_STRUCT);
     iprot_->readMessageEnd();
     iprot_->getTransport()->readEnd();
   }
-  DBMaster_allTeams_presult result;
+  DBMaster_getAllMatches_presult result;
   result.success = &_return;
   result.read(iprot_);
   iprot_->readMessageEnd();
@@ -769,22 +591,22 @@ void DBMasterClient::recv_allTeams(TeamList& _return)
     // _return pointer has now been filled
     return;
   }
-  throw ::apache::thrift::TApplicationException(::apache::thrift::TApplicationException::MISSING_RESULT, "allTeams failed: unknown result");
+  throw ::apache::thrift::TApplicationException(::apache::thrift::TApplicationException::MISSING_RESULT, "getAllMatches failed: unknown result");
 }
 
-void DBMasterClient::teamPlayers(PlayerList& _return, const int32_t team_id)
+void DBMasterClient::teamPlayers(PlayerList& _return, const int32_t teamId)
 {
-  send_teamPlayers(team_id);
+  send_teamPlayers(teamId);
   recv_teamPlayers(_return);
 }
 
-void DBMasterClient::send_teamPlayers(const int32_t team_id)
+void DBMasterClient::send_teamPlayers(const int32_t teamId)
 {
   int32_t cseqid = 0;
   oprot_->writeMessageBegin("teamPlayers", ::apache::thrift::protocol::T_CALL, cseqid);
 
   DBMaster_teamPlayers_pargs args;
-  args.team_id = &team_id;
+  args.teamId = &teamId;
   args.write(oprot_);
 
   oprot_->writeMessageEnd();
@@ -828,65 +650,6 @@ void DBMasterClient::recv_teamPlayers(PlayerList& _return)
     return;
   }
   throw ::apache::thrift::TApplicationException(::apache::thrift::TApplicationException::MISSING_RESULT, "teamPlayers failed: unknown result");
-}
-
-void DBMasterClient::playerAttributes(PlayerAttributes& _return, const int32_t team_id, const int32_t player_id)
-{
-  send_playerAttributes(team_id, player_id);
-  recv_playerAttributes(_return);
-}
-
-void DBMasterClient::send_playerAttributes(const int32_t team_id, const int32_t player_id)
-{
-  int32_t cseqid = 0;
-  oprot_->writeMessageBegin("playerAttributes", ::apache::thrift::protocol::T_CALL, cseqid);
-
-  DBMaster_playerAttributes_pargs args;
-  args.team_id = &team_id;
-  args.player_id = &player_id;
-  args.write(oprot_);
-
-  oprot_->writeMessageEnd();
-  oprot_->getTransport()->writeEnd();
-  oprot_->getTransport()->flush();
-}
-
-void DBMasterClient::recv_playerAttributes(PlayerAttributes& _return)
-{
-
-  int32_t rseqid = 0;
-  std::string fname;
-  ::apache::thrift::protocol::TMessageType mtype;
-
-  iprot_->readMessageBegin(fname, mtype, rseqid);
-  if (mtype == ::apache::thrift::protocol::T_EXCEPTION) {
-    ::apache::thrift::TApplicationException x;
-    x.read(iprot_);
-    iprot_->readMessageEnd();
-    iprot_->getTransport()->readEnd();
-    throw x;
-  }
-  if (mtype != ::apache::thrift::protocol::T_REPLY) {
-    iprot_->skip(::apache::thrift::protocol::T_STRUCT);
-    iprot_->readMessageEnd();
-    iprot_->getTransport()->readEnd();
-  }
-  if (fname.compare("playerAttributes") != 0) {
-    iprot_->skip(::apache::thrift::protocol::T_STRUCT);
-    iprot_->readMessageEnd();
-    iprot_->getTransport()->readEnd();
-  }
-  DBMaster_playerAttributes_presult result;
-  result.success = &_return;
-  result.read(iprot_);
-  iprot_->readMessageEnd();
-  iprot_->getTransport()->readEnd();
-
-  if (result.__isset.success) {
-    // _return pointer has now been filled
-    return;
-  }
-  throw ::apache::thrift::TApplicationException(::apache::thrift::TApplicationException::MISSING_RESULT, "playerAttributes failed: unknown result");
 }
 
 bool DBMasterProcessor::dispatchCall(::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, const std::string& fname, int32_t seqid, void* callContext) {
@@ -961,38 +724,38 @@ void DBMasterProcessor::process_ping(int32_t seqid, ::apache::thrift::protocol::
   }
 }
 
-void DBMasterProcessor::process_allTeams(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext)
+void DBMasterProcessor::process_getAllMatches(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext)
 {
   void* ctx = NULL;
   if (this->eventHandler_.get() != NULL) {
-    ctx = this->eventHandler_->getContext("DBMaster.allTeams", callContext);
+    ctx = this->eventHandler_->getContext("DBMaster.getAllMatches", callContext);
   }
-  ::apache::thrift::TProcessorContextFreer freer(this->eventHandler_.get(), ctx, "DBMaster.allTeams");
+  ::apache::thrift::TProcessorContextFreer freer(this->eventHandler_.get(), ctx, "DBMaster.getAllMatches");
 
   if (this->eventHandler_.get() != NULL) {
-    this->eventHandler_->preRead(ctx, "DBMaster.allTeams");
+    this->eventHandler_->preRead(ctx, "DBMaster.getAllMatches");
   }
 
-  DBMaster_allTeams_args args;
+  DBMaster_getAllMatches_args args;
   args.read(iprot);
   iprot->readMessageEnd();
   uint32_t bytes = iprot->getTransport()->readEnd();
 
   if (this->eventHandler_.get() != NULL) {
-    this->eventHandler_->postRead(ctx, "DBMaster.allTeams", bytes);
+    this->eventHandler_->postRead(ctx, "DBMaster.getAllMatches", bytes);
   }
 
-  DBMaster_allTeams_result result;
+  DBMaster_getAllMatches_result result;
   try {
-    iface_->allTeams(result.success);
+    iface_->getAllMatches(result.success);
     result.__isset.success = true;
   } catch (const std::exception& e) {
     if (this->eventHandler_.get() != NULL) {
-      this->eventHandler_->handlerError(ctx, "DBMaster.allTeams");
+      this->eventHandler_->handlerError(ctx, "DBMaster.getAllMatches");
     }
 
     ::apache::thrift::TApplicationException x(e.what());
-    oprot->writeMessageBegin("allTeams", ::apache::thrift::protocol::T_EXCEPTION, seqid);
+    oprot->writeMessageBegin("getAllMatches", ::apache::thrift::protocol::T_EXCEPTION, seqid);
     x.write(oprot);
     oprot->writeMessageEnd();
     oprot->getTransport()->writeEnd();
@@ -1001,17 +764,17 @@ void DBMasterProcessor::process_allTeams(int32_t seqid, ::apache::thrift::protoc
   }
 
   if (this->eventHandler_.get() != NULL) {
-    this->eventHandler_->preWrite(ctx, "DBMaster.allTeams");
+    this->eventHandler_->preWrite(ctx, "DBMaster.getAllMatches");
   }
 
-  oprot->writeMessageBegin("allTeams", ::apache::thrift::protocol::T_REPLY, seqid);
+  oprot->writeMessageBegin("getAllMatches", ::apache::thrift::protocol::T_REPLY, seqid);
   result.write(oprot);
   oprot->writeMessageEnd();
   bytes = oprot->getTransport()->writeEnd();
   oprot->getTransport()->flush();
 
   if (this->eventHandler_.get() != NULL) {
-    this->eventHandler_->postWrite(ctx, "DBMaster.allTeams", bytes);
+    this->eventHandler_->postWrite(ctx, "DBMaster.getAllMatches", bytes);
   }
 }
 
@@ -1038,7 +801,7 @@ void DBMasterProcessor::process_teamPlayers(int32_t seqid, ::apache::thrift::pro
 
   DBMaster_teamPlayers_result result;
   try {
-    iface_->teamPlayers(result.success, args.team_id);
+    iface_->teamPlayers(result.success, args.teamId);
     result.__isset.success = true;
   } catch (const std::exception& e) {
     if (this->eventHandler_.get() != NULL) {
@@ -1066,60 +829,6 @@ void DBMasterProcessor::process_teamPlayers(int32_t seqid, ::apache::thrift::pro
 
   if (this->eventHandler_.get() != NULL) {
     this->eventHandler_->postWrite(ctx, "DBMaster.teamPlayers", bytes);
-  }
-}
-
-void DBMasterProcessor::process_playerAttributes(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext)
-{
-  void* ctx = NULL;
-  if (this->eventHandler_.get() != NULL) {
-    ctx = this->eventHandler_->getContext("DBMaster.playerAttributes", callContext);
-  }
-  ::apache::thrift::TProcessorContextFreer freer(this->eventHandler_.get(), ctx, "DBMaster.playerAttributes");
-
-  if (this->eventHandler_.get() != NULL) {
-    this->eventHandler_->preRead(ctx, "DBMaster.playerAttributes");
-  }
-
-  DBMaster_playerAttributes_args args;
-  args.read(iprot);
-  iprot->readMessageEnd();
-  uint32_t bytes = iprot->getTransport()->readEnd();
-
-  if (this->eventHandler_.get() != NULL) {
-    this->eventHandler_->postRead(ctx, "DBMaster.playerAttributes", bytes);
-  }
-
-  DBMaster_playerAttributes_result result;
-  try {
-    iface_->playerAttributes(result.success, args.team_id, args.player_id);
-    result.__isset.success = true;
-  } catch (const std::exception& e) {
-    if (this->eventHandler_.get() != NULL) {
-      this->eventHandler_->handlerError(ctx, "DBMaster.playerAttributes");
-    }
-
-    ::apache::thrift::TApplicationException x(e.what());
-    oprot->writeMessageBegin("playerAttributes", ::apache::thrift::protocol::T_EXCEPTION, seqid);
-    x.write(oprot);
-    oprot->writeMessageEnd();
-    oprot->getTransport()->writeEnd();
-    oprot->getTransport()->flush();
-    return;
-  }
-
-  if (this->eventHandler_.get() != NULL) {
-    this->eventHandler_->preWrite(ctx, "DBMaster.playerAttributes");
-  }
-
-  oprot->writeMessageBegin("playerAttributes", ::apache::thrift::protocol::T_REPLY, seqid);
-  result.write(oprot);
-  oprot->writeMessageEnd();
-  bytes = oprot->getTransport()->writeEnd();
-  oprot->getTransport()->flush();
-
-  if (this->eventHandler_.get() != NULL) {
-    this->eventHandler_->postWrite(ctx, "DBMaster.playerAttributes", bytes);
   }
 }
 

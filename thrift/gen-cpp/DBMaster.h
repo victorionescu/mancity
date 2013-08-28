@@ -16,9 +16,8 @@ class DBMasterIf {
  public:
   virtual ~DBMasterIf() {}
   virtual void ping() = 0;
-  virtual void allTeams(TeamList& _return) = 0;
-  virtual void teamPlayers(PlayerList& _return, const int32_t team_id) = 0;
-  virtual void playerAttributes(PlayerAttributes& _return, const int32_t team_id, const int32_t player_id) = 0;
+  virtual void getAllMatches(MatchList& _return) = 0;
+  virtual void teamPlayers(PlayerList& _return, const int32_t teamId) = 0;
 };
 
 class DBMasterIfFactory {
@@ -51,13 +50,10 @@ class DBMasterNull : virtual public DBMasterIf {
   void ping() {
     return;
   }
-  void allTeams(TeamList& /* _return */) {
+  void getAllMatches(MatchList& /* _return */) {
     return;
   }
-  void teamPlayers(PlayerList& /* _return */, const int32_t /* team_id */) {
-    return;
-  }
-  void playerAttributes(PlayerAttributes& /* _return */, const int32_t /* team_id */, const int32_t /* player_id */) {
+  void teamPlayers(PlayerList& /* _return */, const int32_t /* teamId */) {
     return;
   }
 };
@@ -137,24 +133,24 @@ class DBMaster_ping_presult {
 };
 
 
-class DBMaster_allTeams_args {
+class DBMaster_getAllMatches_args {
  public:
 
-  DBMaster_allTeams_args() {
+  DBMaster_getAllMatches_args() {
   }
 
-  virtual ~DBMaster_allTeams_args() throw() {}
+  virtual ~DBMaster_getAllMatches_args() throw() {}
 
 
-  bool operator == (const DBMaster_allTeams_args & /* rhs */) const
+  bool operator == (const DBMaster_getAllMatches_args & /* rhs */) const
   {
     return true;
   }
-  bool operator != (const DBMaster_allTeams_args &rhs) const {
+  bool operator != (const DBMaster_getAllMatches_args &rhs) const {
     return !(*this == rhs);
   }
 
-  bool operator < (const DBMaster_allTeams_args & ) const;
+  bool operator < (const DBMaster_getAllMatches_args & ) const;
 
   uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
   uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
@@ -162,98 +158,98 @@ class DBMaster_allTeams_args {
 };
 
 
-class DBMaster_allTeams_pargs {
+class DBMaster_getAllMatches_pargs {
  public:
 
 
-  virtual ~DBMaster_allTeams_pargs() throw() {}
+  virtual ~DBMaster_getAllMatches_pargs() throw() {}
 
 
   uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
 
 };
 
-typedef struct _DBMaster_allTeams_result__isset {
-  _DBMaster_allTeams_result__isset() : success(false) {}
+typedef struct _DBMaster_getAllMatches_result__isset {
+  _DBMaster_getAllMatches_result__isset() : success(false) {}
   bool success;
-} _DBMaster_allTeams_result__isset;
+} _DBMaster_getAllMatches_result__isset;
 
-class DBMaster_allTeams_result {
+class DBMaster_getAllMatches_result {
  public:
 
-  DBMaster_allTeams_result() {
+  DBMaster_getAllMatches_result() {
   }
 
-  virtual ~DBMaster_allTeams_result() throw() {}
+  virtual ~DBMaster_getAllMatches_result() throw() {}
 
-  TeamList success;
+  MatchList success;
 
-  _DBMaster_allTeams_result__isset __isset;
+  _DBMaster_getAllMatches_result__isset __isset;
 
-  void __set_success(const TeamList& val) {
+  void __set_success(const MatchList& val) {
     success = val;
   }
 
-  bool operator == (const DBMaster_allTeams_result & rhs) const
+  bool operator == (const DBMaster_getAllMatches_result & rhs) const
   {
     if (!(success == rhs.success))
       return false;
     return true;
   }
-  bool operator != (const DBMaster_allTeams_result &rhs) const {
+  bool operator != (const DBMaster_getAllMatches_result &rhs) const {
     return !(*this == rhs);
   }
 
-  bool operator < (const DBMaster_allTeams_result & ) const;
+  bool operator < (const DBMaster_getAllMatches_result & ) const;
 
   uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
   uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
 
 };
 
-typedef struct _DBMaster_allTeams_presult__isset {
-  _DBMaster_allTeams_presult__isset() : success(false) {}
+typedef struct _DBMaster_getAllMatches_presult__isset {
+  _DBMaster_getAllMatches_presult__isset() : success(false) {}
   bool success;
-} _DBMaster_allTeams_presult__isset;
+} _DBMaster_getAllMatches_presult__isset;
 
-class DBMaster_allTeams_presult {
+class DBMaster_getAllMatches_presult {
  public:
 
 
-  virtual ~DBMaster_allTeams_presult() throw() {}
+  virtual ~DBMaster_getAllMatches_presult() throw() {}
 
-  TeamList* success;
+  MatchList* success;
 
-  _DBMaster_allTeams_presult__isset __isset;
+  _DBMaster_getAllMatches_presult__isset __isset;
 
   uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
 
 };
 
 typedef struct _DBMaster_teamPlayers_args__isset {
-  _DBMaster_teamPlayers_args__isset() : team_id(false) {}
-  bool team_id;
+  _DBMaster_teamPlayers_args__isset() : teamId(false) {}
+  bool teamId;
 } _DBMaster_teamPlayers_args__isset;
 
 class DBMaster_teamPlayers_args {
  public:
 
-  DBMaster_teamPlayers_args() : team_id(0) {
+  DBMaster_teamPlayers_args() : teamId(0) {
   }
 
   virtual ~DBMaster_teamPlayers_args() throw() {}
 
-  int32_t team_id;
+  int32_t teamId;
 
   _DBMaster_teamPlayers_args__isset __isset;
 
-  void __set_team_id(const int32_t val) {
-    team_id = val;
+  void __set_teamId(const int32_t val) {
+    teamId = val;
   }
 
   bool operator == (const DBMaster_teamPlayers_args & rhs) const
   {
-    if (!(team_id == rhs.team_id))
+    if (!(teamId == rhs.teamId))
       return false;
     return true;
   }
@@ -275,7 +271,7 @@ class DBMaster_teamPlayers_pargs {
 
   virtual ~DBMaster_teamPlayers_pargs() throw() {}
 
-  const int32_t* team_id;
+  const int32_t* teamId;
 
   uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
 
@@ -338,123 +334,6 @@ class DBMaster_teamPlayers_presult {
 
 };
 
-typedef struct _DBMaster_playerAttributes_args__isset {
-  _DBMaster_playerAttributes_args__isset() : team_id(false), player_id(false) {}
-  bool team_id;
-  bool player_id;
-} _DBMaster_playerAttributes_args__isset;
-
-class DBMaster_playerAttributes_args {
- public:
-
-  DBMaster_playerAttributes_args() : team_id(0), player_id(0) {
-  }
-
-  virtual ~DBMaster_playerAttributes_args() throw() {}
-
-  int32_t team_id;
-  int32_t player_id;
-
-  _DBMaster_playerAttributes_args__isset __isset;
-
-  void __set_team_id(const int32_t val) {
-    team_id = val;
-  }
-
-  void __set_player_id(const int32_t val) {
-    player_id = val;
-  }
-
-  bool operator == (const DBMaster_playerAttributes_args & rhs) const
-  {
-    if (!(team_id == rhs.team_id))
-      return false;
-    if (!(player_id == rhs.player_id))
-      return false;
-    return true;
-  }
-  bool operator != (const DBMaster_playerAttributes_args &rhs) const {
-    return !(*this == rhs);
-  }
-
-  bool operator < (const DBMaster_playerAttributes_args & ) const;
-
-  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
-  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
-
-};
-
-
-class DBMaster_playerAttributes_pargs {
- public:
-
-
-  virtual ~DBMaster_playerAttributes_pargs() throw() {}
-
-  const int32_t* team_id;
-  const int32_t* player_id;
-
-  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
-
-};
-
-typedef struct _DBMaster_playerAttributes_result__isset {
-  _DBMaster_playerAttributes_result__isset() : success(false) {}
-  bool success;
-} _DBMaster_playerAttributes_result__isset;
-
-class DBMaster_playerAttributes_result {
- public:
-
-  DBMaster_playerAttributes_result() {
-  }
-
-  virtual ~DBMaster_playerAttributes_result() throw() {}
-
-  PlayerAttributes success;
-
-  _DBMaster_playerAttributes_result__isset __isset;
-
-  void __set_success(const PlayerAttributes& val) {
-    success = val;
-  }
-
-  bool operator == (const DBMaster_playerAttributes_result & rhs) const
-  {
-    if (!(success == rhs.success))
-      return false;
-    return true;
-  }
-  bool operator != (const DBMaster_playerAttributes_result &rhs) const {
-    return !(*this == rhs);
-  }
-
-  bool operator < (const DBMaster_playerAttributes_result & ) const;
-
-  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
-  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
-
-};
-
-typedef struct _DBMaster_playerAttributes_presult__isset {
-  _DBMaster_playerAttributes_presult__isset() : success(false) {}
-  bool success;
-} _DBMaster_playerAttributes_presult__isset;
-
-class DBMaster_playerAttributes_presult {
- public:
-
-
-  virtual ~DBMaster_playerAttributes_presult() throw() {}
-
-  PlayerAttributes* success;
-
-  _DBMaster_playerAttributes_presult__isset __isset;
-
-  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
-
-};
-
 class DBMasterClient : virtual public DBMasterIf {
  public:
   DBMasterClient(boost::shared_ptr< ::apache::thrift::protocol::TProtocol> prot) :
@@ -478,15 +357,12 @@ class DBMasterClient : virtual public DBMasterIf {
   void ping();
   void send_ping();
   void recv_ping();
-  void allTeams(TeamList& _return);
-  void send_allTeams();
-  void recv_allTeams(TeamList& _return);
-  void teamPlayers(PlayerList& _return, const int32_t team_id);
-  void send_teamPlayers(const int32_t team_id);
+  void getAllMatches(MatchList& _return);
+  void send_getAllMatches();
+  void recv_getAllMatches(MatchList& _return);
+  void teamPlayers(PlayerList& _return, const int32_t teamId);
+  void send_teamPlayers(const int32_t teamId);
   void recv_teamPlayers(PlayerList& _return);
-  void playerAttributes(PlayerAttributes& _return, const int32_t team_id, const int32_t player_id);
-  void send_playerAttributes(const int32_t team_id, const int32_t player_id);
-  void recv_playerAttributes(PlayerAttributes& _return);
  protected:
   boost::shared_ptr< ::apache::thrift::protocol::TProtocol> piprot_;
   boost::shared_ptr< ::apache::thrift::protocol::TProtocol> poprot_;
@@ -503,16 +379,14 @@ class DBMasterProcessor : public ::apache::thrift::TDispatchProcessor {
   typedef std::map<std::string, ProcessFunction> ProcessMap;
   ProcessMap processMap_;
   void process_ping(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
-  void process_allTeams(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
+  void process_getAllMatches(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
   void process_teamPlayers(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
-  void process_playerAttributes(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
  public:
   DBMasterProcessor(boost::shared_ptr<DBMasterIf> iface) :
     iface_(iface) {
     processMap_["ping"] = &DBMasterProcessor::process_ping;
-    processMap_["allTeams"] = &DBMasterProcessor::process_allTeams;
+    processMap_["getAllMatches"] = &DBMasterProcessor::process_getAllMatches;
     processMap_["teamPlayers"] = &DBMasterProcessor::process_teamPlayers;
-    processMap_["playerAttributes"] = &DBMasterProcessor::process_playerAttributes;
   }
 
   virtual ~DBMasterProcessor() {}
@@ -550,33 +424,23 @@ class DBMasterMultiface : virtual public DBMasterIf {
     ifaces_[i]->ping();
   }
 
-  void allTeams(TeamList& _return) {
+  void getAllMatches(MatchList& _return) {
     size_t sz = ifaces_.size();
     size_t i = 0;
     for (; i < (sz - 1); ++i) {
-      ifaces_[i]->allTeams(_return);
+      ifaces_[i]->getAllMatches(_return);
     }
-    ifaces_[i]->allTeams(_return);
+    ifaces_[i]->getAllMatches(_return);
     return;
   }
 
-  void teamPlayers(PlayerList& _return, const int32_t team_id) {
+  void teamPlayers(PlayerList& _return, const int32_t teamId) {
     size_t sz = ifaces_.size();
     size_t i = 0;
     for (; i < (sz - 1); ++i) {
-      ifaces_[i]->teamPlayers(_return, team_id);
+      ifaces_[i]->teamPlayers(_return, teamId);
     }
-    ifaces_[i]->teamPlayers(_return, team_id);
-    return;
-  }
-
-  void playerAttributes(PlayerAttributes& _return, const int32_t team_id, const int32_t player_id) {
-    size_t sz = ifaces_.size();
-    size_t i = 0;
-    for (; i < (sz - 1); ++i) {
-      ifaces_[i]->playerAttributes(_return, team_id, player_id);
-    }
-    ifaces_[i]->playerAttributes(_return, team_id, player_id);
+    ifaces_[i]->teamPlayers(_return, teamId);
     return;
   }
 

@@ -19,28 +19,28 @@ use Thrift\Exception\TApplicationException;
 class Team {
   static $_TSPEC;
 
-  public $teamId = null;
-  public $teamName = null;
+  public $id = null;
+  public $name = null;
 
   public function __construct($vals=null) {
     if (!isset(self::$_TSPEC)) {
       self::$_TSPEC = array(
         1 => array(
-          'var' => 'teamId',
+          'var' => 'id',
           'type' => TType::I32,
           ),
         2 => array(
-          'var' => 'teamName',
+          'var' => 'name',
           'type' => TType::STRING,
           ),
         );
     }
     if (is_array($vals)) {
-      if (isset($vals['teamId'])) {
-        $this->teamId = $vals['teamId'];
+      if (isset($vals['id'])) {
+        $this->id = $vals['id'];
       }
-      if (isset($vals['teamName'])) {
-        $this->teamName = $vals['teamName'];
+      if (isset($vals['name'])) {
+        $this->name = $vals['name'];
       }
     }
   }
@@ -66,14 +66,14 @@ class Team {
       {
         case 1:
           if ($ftype == TType::I32) {
-            $xfer += $input->readI32($this->teamId);
+            $xfer += $input->readI32($this->id);
           } else {
             $xfer += $input->skip($ftype);
           }
           break;
         case 2:
           if ($ftype == TType::STRING) {
-            $xfer += $input->readString($this->teamName);
+            $xfer += $input->readString($this->name);
           } else {
             $xfer += $input->skip($ftype);
           }
@@ -91,14 +91,14 @@ class Team {
   public function write($output) {
     $xfer = 0;
     $xfer += $output->writeStructBegin('Team');
-    if ($this->teamId !== null) {
-      $xfer += $output->writeFieldBegin('teamId', TType::I32, 1);
-      $xfer += $output->writeI32($this->teamId);
+    if ($this->id !== null) {
+      $xfer += $output->writeFieldBegin('id', TType::I32, 1);
+      $xfer += $output->writeI32($this->id);
       $xfer += $output->writeFieldEnd();
     }
-    if ($this->teamName !== null) {
-      $xfer += $output->writeFieldBegin('teamName', TType::STRING, 2);
-      $xfer += $output->writeString($this->teamName);
+    if ($this->name !== null) {
+      $xfer += $output->writeFieldBegin('name', TType::STRING, 2);
+      $xfer += $output->writeString($this->name);
       $xfer += $output->writeFieldEnd();
     }
     $xfer += $output->writeFieldStop();
@@ -111,28 +111,36 @@ class Team {
 class Player {
   static $_TSPEC;
 
-  public $playerFirstName = null;
-  public $playerLastName = null;
+  public $id = null;
+  public $firstName = null;
+  public $lastName = null;
 
   public function __construct($vals=null) {
     if (!isset(self::$_TSPEC)) {
       self::$_TSPEC = array(
         1 => array(
-          'var' => 'playerFirstName',
-          'type' => TType::STRING,
+          'var' => 'id',
+          'type' => TType::I32,
           ),
         2 => array(
-          'var' => 'playerLastName',
+          'var' => 'firstName',
+          'type' => TType::STRING,
+          ),
+        3 => array(
+          'var' => 'lastName',
           'type' => TType::STRING,
           ),
         );
     }
     if (is_array($vals)) {
-      if (isset($vals['playerFirstName'])) {
-        $this->playerFirstName = $vals['playerFirstName'];
+      if (isset($vals['id'])) {
+        $this->id = $vals['id'];
       }
-      if (isset($vals['playerLastName'])) {
-        $this->playerLastName = $vals['playerLastName'];
+      if (isset($vals['firstName'])) {
+        $this->firstName = $vals['firstName'];
+      }
+      if (isset($vals['lastName'])) {
+        $this->lastName = $vals['lastName'];
       }
     }
   }
@@ -157,15 +165,22 @@ class Player {
       switch ($fid)
       {
         case 1:
-          if ($ftype == TType::STRING) {
-            $xfer += $input->readString($this->playerFirstName);
+          if ($ftype == TType::I32) {
+            $xfer += $input->readI32($this->id);
           } else {
             $xfer += $input->skip($ftype);
           }
           break;
         case 2:
           if ($ftype == TType::STRING) {
-            $xfer += $input->readString($this->playerLastName);
+            $xfer += $input->readString($this->firstName);
+          } else {
+            $xfer += $input->skip($ftype);
+          }
+          break;
+        case 3:
+          if ($ftype == TType::STRING) {
+            $xfer += $input->readString($this->lastName);
           } else {
             $xfer += $input->skip($ftype);
           }
@@ -183,14 +198,19 @@ class Player {
   public function write($output) {
     $xfer = 0;
     $xfer += $output->writeStructBegin('Player');
-    if ($this->playerFirstName !== null) {
-      $xfer += $output->writeFieldBegin('playerFirstName', TType::STRING, 1);
-      $xfer += $output->writeString($this->playerFirstName);
+    if ($this->id !== null) {
+      $xfer += $output->writeFieldBegin('id', TType::I32, 1);
+      $xfer += $output->writeI32($this->id);
       $xfer += $output->writeFieldEnd();
     }
-    if ($this->playerLastName !== null) {
-      $xfer += $output->writeFieldBegin('playerLastName', TType::STRING, 2);
-      $xfer += $output->writeString($this->playerLastName);
+    if ($this->firstName !== null) {
+      $xfer += $output->writeFieldBegin('firstName', TType::STRING, 2);
+      $xfer += $output->writeString($this->firstName);
+      $xfer += $output->writeFieldEnd();
+    }
+    if ($this->lastName !== null) {
+      $xfer += $output->writeFieldBegin('lastName', TType::STRING, 3);
+      $xfer += $output->writeString($this->lastName);
       $xfer += $output->writeFieldEnd();
     }
     $xfer += $output->writeFieldStop();
@@ -200,53 +220,45 @@ class Player {
 
 }
 
-class PlayerAttributes {
+class Match {
   static $_TSPEC;
 
-  public $passesSuccess = null;
-  public $passesFail = null;
-  public $shotsOnTarget = null;
-  public $shotsOffTarget = null;
+  public $id = null;
+  public $homeId = null;
+  public $awayId = null;
 
   public function __construct($vals=null) {
     if (!isset(self::$_TSPEC)) {
       self::$_TSPEC = array(
         1 => array(
-          'var' => 'passesSuccess',
+          'var' => 'id',
           'type' => TType::I32,
           ),
         2 => array(
-          'var' => 'passesFail',
+          'var' => 'homeId',
           'type' => TType::I32,
           ),
         3 => array(
-          'var' => 'shotsOnTarget',
-          'type' => TType::I32,
-          ),
-        4 => array(
-          'var' => 'shotsOffTarget',
+          'var' => 'awayId',
           'type' => TType::I32,
           ),
         );
     }
     if (is_array($vals)) {
-      if (isset($vals['passesSuccess'])) {
-        $this->passesSuccess = $vals['passesSuccess'];
+      if (isset($vals['id'])) {
+        $this->id = $vals['id'];
       }
-      if (isset($vals['passesFail'])) {
-        $this->passesFail = $vals['passesFail'];
+      if (isset($vals['homeId'])) {
+        $this->homeId = $vals['homeId'];
       }
-      if (isset($vals['shotsOnTarget'])) {
-        $this->shotsOnTarget = $vals['shotsOnTarget'];
-      }
-      if (isset($vals['shotsOffTarget'])) {
-        $this->shotsOffTarget = $vals['shotsOffTarget'];
+      if (isset($vals['awayId'])) {
+        $this->awayId = $vals['awayId'];
       }
     }
   }
 
   public function getName() {
-    return 'PlayerAttributes';
+    return 'Match';
   }
 
   public function read($input)
@@ -266,28 +278,21 @@ class PlayerAttributes {
       {
         case 1:
           if ($ftype == TType::I32) {
-            $xfer += $input->readI32($this->passesSuccess);
+            $xfer += $input->readI32($this->id);
           } else {
             $xfer += $input->skip($ftype);
           }
           break;
         case 2:
           if ($ftype == TType::I32) {
-            $xfer += $input->readI32($this->passesFail);
+            $xfer += $input->readI32($this->homeId);
           } else {
             $xfer += $input->skip($ftype);
           }
           break;
         case 3:
           if ($ftype == TType::I32) {
-            $xfer += $input->readI32($this->shotsOnTarget);
-          } else {
-            $xfer += $input->skip($ftype);
-          }
-          break;
-        case 4:
-          if ($ftype == TType::I32) {
-            $xfer += $input->readI32($this->shotsOffTarget);
+            $xfer += $input->readI32($this->awayId);
           } else {
             $xfer += $input->skip($ftype);
           }
@@ -304,25 +309,252 @@ class PlayerAttributes {
 
   public function write($output) {
     $xfer = 0;
-    $xfer += $output->writeStructBegin('PlayerAttributes');
-    if ($this->passesSuccess !== null) {
-      $xfer += $output->writeFieldBegin('passesSuccess', TType::I32, 1);
-      $xfer += $output->writeI32($this->passesSuccess);
+    $xfer += $output->writeStructBegin('Match');
+    if ($this->id !== null) {
+      $xfer += $output->writeFieldBegin('id', TType::I32, 1);
+      $xfer += $output->writeI32($this->id);
       $xfer += $output->writeFieldEnd();
     }
-    if ($this->passesFail !== null) {
-      $xfer += $output->writeFieldBegin('passesFail', TType::I32, 2);
-      $xfer += $output->writeI32($this->passesFail);
+    if ($this->homeId !== null) {
+      $xfer += $output->writeFieldBegin('homeId', TType::I32, 2);
+      $xfer += $output->writeI32($this->homeId);
       $xfer += $output->writeFieldEnd();
     }
-    if ($this->shotsOnTarget !== null) {
-      $xfer += $output->writeFieldBegin('shotsOnTarget', TType::I32, 3);
-      $xfer += $output->writeI32($this->shotsOnTarget);
+    if ($this->awayId !== null) {
+      $xfer += $output->writeFieldBegin('awayId', TType::I32, 3);
+      $xfer += $output->writeI32($this->awayId);
       $xfer += $output->writeFieldEnd();
     }
-    if ($this->shotsOffTarget !== null) {
-      $xfer += $output->writeFieldBegin('shotsOffTarget', TType::I32, 4);
-      $xfer += $output->writeI32($this->shotsOffTarget);
+    $xfer += $output->writeFieldStop();
+    $xfer += $output->writeStructEnd();
+    return $xfer;
+  }
+
+}
+
+class Event {
+  static $_TSPEC;
+
+  public $id = null;
+  public $eventType = null;
+  public $playerId = null;
+  public $startX = null;
+  public $startY = null;
+  public $endX = null;
+  public $endY = null;
+  public $goalY = null;
+  public $goalZ = null;
+
+  public function __construct($vals=null) {
+    if (!isset(self::$_TSPEC)) {
+      self::$_TSPEC = array(
+        1 => array(
+          'var' => 'id',
+          'type' => TType::I32,
+          ),
+        2 => array(
+          'var' => 'eventType',
+          'type' => TType::I32,
+          ),
+        3 => array(
+          'var' => 'playerId',
+          'type' => TType::I32,
+          ),
+        4 => array(
+          'var' => 'startX',
+          'type' => TType::DOUBLE,
+          ),
+        5 => array(
+          'var' => 'startY',
+          'type' => TType::DOUBLE,
+          ),
+        6 => array(
+          'var' => 'endX',
+          'type' => TType::DOUBLE,
+          ),
+        7 => array(
+          'var' => 'endY',
+          'type' => TType::DOUBLE,
+          ),
+        8 => array(
+          'var' => 'goalY',
+          'type' => TType::DOUBLE,
+          ),
+        9 => array(
+          'var' => 'goalZ',
+          'type' => TType::DOUBLE,
+          ),
+        );
+    }
+    if (is_array($vals)) {
+      if (isset($vals['id'])) {
+        $this->id = $vals['id'];
+      }
+      if (isset($vals['eventType'])) {
+        $this->eventType = $vals['eventType'];
+      }
+      if (isset($vals['playerId'])) {
+        $this->playerId = $vals['playerId'];
+      }
+      if (isset($vals['startX'])) {
+        $this->startX = $vals['startX'];
+      }
+      if (isset($vals['startY'])) {
+        $this->startY = $vals['startY'];
+      }
+      if (isset($vals['endX'])) {
+        $this->endX = $vals['endX'];
+      }
+      if (isset($vals['endY'])) {
+        $this->endY = $vals['endY'];
+      }
+      if (isset($vals['goalY'])) {
+        $this->goalY = $vals['goalY'];
+      }
+      if (isset($vals['goalZ'])) {
+        $this->goalZ = $vals['goalZ'];
+      }
+    }
+  }
+
+  public function getName() {
+    return 'Event';
+  }
+
+  public function read($input)
+  {
+    $xfer = 0;
+    $fname = null;
+    $ftype = 0;
+    $fid = 0;
+    $xfer += $input->readStructBegin($fname);
+    while (true)
+    {
+      $xfer += $input->readFieldBegin($fname, $ftype, $fid);
+      if ($ftype == TType::STOP) {
+        break;
+      }
+      switch ($fid)
+      {
+        case 1:
+          if ($ftype == TType::I32) {
+            $xfer += $input->readI32($this->id);
+          } else {
+            $xfer += $input->skip($ftype);
+          }
+          break;
+        case 2:
+          if ($ftype == TType::I32) {
+            $xfer += $input->readI32($this->eventType);
+          } else {
+            $xfer += $input->skip($ftype);
+          }
+          break;
+        case 3:
+          if ($ftype == TType::I32) {
+            $xfer += $input->readI32($this->playerId);
+          } else {
+            $xfer += $input->skip($ftype);
+          }
+          break;
+        case 4:
+          if ($ftype == TType::DOUBLE) {
+            $xfer += $input->readDouble($this->startX);
+          } else {
+            $xfer += $input->skip($ftype);
+          }
+          break;
+        case 5:
+          if ($ftype == TType::DOUBLE) {
+            $xfer += $input->readDouble($this->startY);
+          } else {
+            $xfer += $input->skip($ftype);
+          }
+          break;
+        case 6:
+          if ($ftype == TType::DOUBLE) {
+            $xfer += $input->readDouble($this->endX);
+          } else {
+            $xfer += $input->skip($ftype);
+          }
+          break;
+        case 7:
+          if ($ftype == TType::DOUBLE) {
+            $xfer += $input->readDouble($this->endY);
+          } else {
+            $xfer += $input->skip($ftype);
+          }
+          break;
+        case 8:
+          if ($ftype == TType::DOUBLE) {
+            $xfer += $input->readDouble($this->goalY);
+          } else {
+            $xfer += $input->skip($ftype);
+          }
+          break;
+        case 9:
+          if ($ftype == TType::DOUBLE) {
+            $xfer += $input->readDouble($this->goalZ);
+          } else {
+            $xfer += $input->skip($ftype);
+          }
+          break;
+        default:
+          $xfer += $input->skip($ftype);
+          break;
+      }
+      $xfer += $input->readFieldEnd();
+    }
+    $xfer += $input->readStructEnd();
+    return $xfer;
+  }
+
+  public function write($output) {
+    $xfer = 0;
+    $xfer += $output->writeStructBegin('Event');
+    if ($this->id !== null) {
+      $xfer += $output->writeFieldBegin('id', TType::I32, 1);
+      $xfer += $output->writeI32($this->id);
+      $xfer += $output->writeFieldEnd();
+    }
+    if ($this->eventType !== null) {
+      $xfer += $output->writeFieldBegin('eventType', TType::I32, 2);
+      $xfer += $output->writeI32($this->eventType);
+      $xfer += $output->writeFieldEnd();
+    }
+    if ($this->playerId !== null) {
+      $xfer += $output->writeFieldBegin('playerId', TType::I32, 3);
+      $xfer += $output->writeI32($this->playerId);
+      $xfer += $output->writeFieldEnd();
+    }
+    if ($this->startX !== null) {
+      $xfer += $output->writeFieldBegin('startX', TType::DOUBLE, 4);
+      $xfer += $output->writeDouble($this->startX);
+      $xfer += $output->writeFieldEnd();
+    }
+    if ($this->startY !== null) {
+      $xfer += $output->writeFieldBegin('startY', TType::DOUBLE, 5);
+      $xfer += $output->writeDouble($this->startY);
+      $xfer += $output->writeFieldEnd();
+    }
+    if ($this->endX !== null) {
+      $xfer += $output->writeFieldBegin('endX', TType::DOUBLE, 6);
+      $xfer += $output->writeDouble($this->endX);
+      $xfer += $output->writeFieldEnd();
+    }
+    if ($this->endY !== null) {
+      $xfer += $output->writeFieldBegin('endY', TType::DOUBLE, 7);
+      $xfer += $output->writeDouble($this->endY);
+      $xfer += $output->writeFieldEnd();
+    }
+    if ($this->goalY !== null) {
+      $xfer += $output->writeFieldBegin('goalY', TType::DOUBLE, 8);
+      $xfer += $output->writeDouble($this->goalY);
+      $xfer += $output->writeFieldEnd();
+    }
+    if ($this->goalZ !== null) {
+      $xfer += $output->writeFieldBegin('goalZ', TType::DOUBLE, 9);
+      $xfer += $output->writeDouble($this->goalZ);
       $xfer += $output->writeFieldEnd();
     }
     $xfer += $output->writeFieldStop();

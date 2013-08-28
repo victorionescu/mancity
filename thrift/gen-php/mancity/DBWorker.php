@@ -17,9 +17,11 @@ use Thrift\Exception\TApplicationException;
 
 interface DBWorkerIf {
   public function ping();
-  public function allTeams();
-  public function teamPlayers($team_id);
-  public function playerAttributes($team_id, $player_id);
+  public function getAllMatches();
+  public function getMatch($matchId);
+  public function getTeamName($teamId);
+  public function getTeamPlayers($teamId);
+  public function getMatchEvents($matchId, $playerIdList, $eventTypeList);
 }
 
 class DBWorkerClient implements \mancity\DBWorkerIf {
@@ -80,33 +82,33 @@ class DBWorkerClient implements \mancity\DBWorkerIf {
     return;
   }
 
-  public function allTeams()
+  public function getAllMatches()
   {
-    $this->send_allTeams();
-    return $this->recv_allTeams();
+    $this->send_getAllMatches();
+    return $this->recv_getAllMatches();
   }
 
-  public function send_allTeams()
+  public function send_getAllMatches()
   {
-    $args = new \mancity\DBWorker_allTeams_args();
+    $args = new \mancity\DBWorker_getAllMatches_args();
     $bin_accel = ($this->output_ instanceof TProtocol::$TBINARYPROTOCOLACCELERATED) && function_exists('thrift_protocol_write_binary');
     if ($bin_accel)
     {
-      thrift_protocol_write_binary($this->output_, 'allTeams', TMessageType::CALL, $args, $this->seqid_, $this->output_->isStrictWrite());
+      thrift_protocol_write_binary($this->output_, 'getAllMatches', TMessageType::CALL, $args, $this->seqid_, $this->output_->isStrictWrite());
     }
     else
     {
-      $this->output_->writeMessageBegin('allTeams', TMessageType::CALL, $this->seqid_);
+      $this->output_->writeMessageBegin('getAllMatches', TMessageType::CALL, $this->seqid_);
       $args->write($this->output_);
       $this->output_->writeMessageEnd();
       $this->output_->getTransport()->flush();
     }
   }
 
-  public function recv_allTeams()
+  public function recv_getAllMatches()
   {
     $bin_accel = ($this->input_ instanceof TProtocol::$TBINARYPROTOCOLACCELERATED) && function_exists('thrift_protocol_read_binary');
-    if ($bin_accel) $result = thrift_protocol_read_binary($this->input_, '\mancity\DBWorker_allTeams_result', $this->input_->isStrictRead());
+    if ($bin_accel) $result = thrift_protocol_read_binary($this->input_, '\mancity\DBWorker_getAllMatches_result', $this->input_->isStrictRead());
     else
     {
       $rseqid = 0;
@@ -120,44 +122,44 @@ class DBWorkerClient implements \mancity\DBWorkerIf {
         $this->input_->readMessageEnd();
         throw $x;
       }
-      $result = new \mancity\DBWorker_allTeams_result();
+      $result = new \mancity\DBWorker_getAllMatches_result();
       $result->read($this->input_);
       $this->input_->readMessageEnd();
     }
     if ($result->success !== null) {
       return $result->success;
     }
-    throw new \Exception("allTeams failed: unknown result");
+    throw new \Exception("getAllMatches failed: unknown result");
   }
 
-  public function teamPlayers($team_id)
+  public function getMatch($matchId)
   {
-    $this->send_teamPlayers($team_id);
-    return $this->recv_teamPlayers();
+    $this->send_getMatch($matchId);
+    return $this->recv_getMatch();
   }
 
-  public function send_teamPlayers($team_id)
+  public function send_getMatch($matchId)
   {
-    $args = new \mancity\DBWorker_teamPlayers_args();
-    $args->team_id = $team_id;
+    $args = new \mancity\DBWorker_getMatch_args();
+    $args->matchId = $matchId;
     $bin_accel = ($this->output_ instanceof TProtocol::$TBINARYPROTOCOLACCELERATED) && function_exists('thrift_protocol_write_binary');
     if ($bin_accel)
     {
-      thrift_protocol_write_binary($this->output_, 'teamPlayers', TMessageType::CALL, $args, $this->seqid_, $this->output_->isStrictWrite());
+      thrift_protocol_write_binary($this->output_, 'getMatch', TMessageType::CALL, $args, $this->seqid_, $this->output_->isStrictWrite());
     }
     else
     {
-      $this->output_->writeMessageBegin('teamPlayers', TMessageType::CALL, $this->seqid_);
+      $this->output_->writeMessageBegin('getMatch', TMessageType::CALL, $this->seqid_);
       $args->write($this->output_);
       $this->output_->writeMessageEnd();
       $this->output_->getTransport()->flush();
     }
   }
 
-  public function recv_teamPlayers()
+  public function recv_getMatch()
   {
     $bin_accel = ($this->input_ instanceof TProtocol::$TBINARYPROTOCOLACCELERATED) && function_exists('thrift_protocol_read_binary');
-    if ($bin_accel) $result = thrift_protocol_read_binary($this->input_, '\mancity\DBWorker_teamPlayers_result', $this->input_->isStrictRead());
+    if ($bin_accel) $result = thrift_protocol_read_binary($this->input_, '\mancity\DBWorker_getMatch_result', $this->input_->isStrictRead());
     else
     {
       $rseqid = 0;
@@ -171,45 +173,44 @@ class DBWorkerClient implements \mancity\DBWorkerIf {
         $this->input_->readMessageEnd();
         throw $x;
       }
-      $result = new \mancity\DBWorker_teamPlayers_result();
+      $result = new \mancity\DBWorker_getMatch_result();
       $result->read($this->input_);
       $this->input_->readMessageEnd();
     }
     if ($result->success !== null) {
       return $result->success;
     }
-    throw new \Exception("teamPlayers failed: unknown result");
+    throw new \Exception("getMatch failed: unknown result");
   }
 
-  public function playerAttributes($team_id, $player_id)
+  public function getTeamName($teamId)
   {
-    $this->send_playerAttributes($team_id, $player_id);
-    return $this->recv_playerAttributes();
+    $this->send_getTeamName($teamId);
+    return $this->recv_getTeamName();
   }
 
-  public function send_playerAttributes($team_id, $player_id)
+  public function send_getTeamName($teamId)
   {
-    $args = new \mancity\DBWorker_playerAttributes_args();
-    $args->team_id = $team_id;
-    $args->player_id = $player_id;
+    $args = new \mancity\DBWorker_getTeamName_args();
+    $args->teamId = $teamId;
     $bin_accel = ($this->output_ instanceof TProtocol::$TBINARYPROTOCOLACCELERATED) && function_exists('thrift_protocol_write_binary');
     if ($bin_accel)
     {
-      thrift_protocol_write_binary($this->output_, 'playerAttributes', TMessageType::CALL, $args, $this->seqid_, $this->output_->isStrictWrite());
+      thrift_protocol_write_binary($this->output_, 'getTeamName', TMessageType::CALL, $args, $this->seqid_, $this->output_->isStrictWrite());
     }
     else
     {
-      $this->output_->writeMessageBegin('playerAttributes', TMessageType::CALL, $this->seqid_);
+      $this->output_->writeMessageBegin('getTeamName', TMessageType::CALL, $this->seqid_);
       $args->write($this->output_);
       $this->output_->writeMessageEnd();
       $this->output_->getTransport()->flush();
     }
   }
 
-  public function recv_playerAttributes()
+  public function recv_getTeamName()
   {
     $bin_accel = ($this->input_ instanceof TProtocol::$TBINARYPROTOCOLACCELERATED) && function_exists('thrift_protocol_read_binary');
-    if ($bin_accel) $result = thrift_protocol_read_binary($this->input_, '\mancity\DBWorker_playerAttributes_result', $this->input_->isStrictRead());
+    if ($bin_accel) $result = thrift_protocol_read_binary($this->input_, '\mancity\DBWorker_getTeamName_result', $this->input_->isStrictRead());
     else
     {
       $rseqid = 0;
@@ -223,14 +224,118 @@ class DBWorkerClient implements \mancity\DBWorkerIf {
         $this->input_->readMessageEnd();
         throw $x;
       }
-      $result = new \mancity\DBWorker_playerAttributes_result();
+      $result = new \mancity\DBWorker_getTeamName_result();
       $result->read($this->input_);
       $this->input_->readMessageEnd();
     }
     if ($result->success !== null) {
       return $result->success;
     }
-    throw new \Exception("playerAttributes failed: unknown result");
+    throw new \Exception("getTeamName failed: unknown result");
+  }
+
+  public function getTeamPlayers($teamId)
+  {
+    $this->send_getTeamPlayers($teamId);
+    return $this->recv_getTeamPlayers();
+  }
+
+  public function send_getTeamPlayers($teamId)
+  {
+    $args = new \mancity\DBWorker_getTeamPlayers_args();
+    $args->teamId = $teamId;
+    $bin_accel = ($this->output_ instanceof TProtocol::$TBINARYPROTOCOLACCELERATED) && function_exists('thrift_protocol_write_binary');
+    if ($bin_accel)
+    {
+      thrift_protocol_write_binary($this->output_, 'getTeamPlayers', TMessageType::CALL, $args, $this->seqid_, $this->output_->isStrictWrite());
+    }
+    else
+    {
+      $this->output_->writeMessageBegin('getTeamPlayers', TMessageType::CALL, $this->seqid_);
+      $args->write($this->output_);
+      $this->output_->writeMessageEnd();
+      $this->output_->getTransport()->flush();
+    }
+  }
+
+  public function recv_getTeamPlayers()
+  {
+    $bin_accel = ($this->input_ instanceof TProtocol::$TBINARYPROTOCOLACCELERATED) && function_exists('thrift_protocol_read_binary');
+    if ($bin_accel) $result = thrift_protocol_read_binary($this->input_, '\mancity\DBWorker_getTeamPlayers_result', $this->input_->isStrictRead());
+    else
+    {
+      $rseqid = 0;
+      $fname = null;
+      $mtype = 0;
+
+      $this->input_->readMessageBegin($fname, $mtype, $rseqid);
+      if ($mtype == TMessageType::EXCEPTION) {
+        $x = new TApplicationException();
+        $x->read($this->input_);
+        $this->input_->readMessageEnd();
+        throw $x;
+      }
+      $result = new \mancity\DBWorker_getTeamPlayers_result();
+      $result->read($this->input_);
+      $this->input_->readMessageEnd();
+    }
+    if ($result->success !== null) {
+      return $result->success;
+    }
+    throw new \Exception("getTeamPlayers failed: unknown result");
+  }
+
+  public function getMatchEvents($matchId, $playerIdList, $eventTypeList)
+  {
+    $this->send_getMatchEvents($matchId, $playerIdList, $eventTypeList);
+    return $this->recv_getMatchEvents();
+  }
+
+  public function send_getMatchEvents($matchId, $playerIdList, $eventTypeList)
+  {
+    $args = new \mancity\DBWorker_getMatchEvents_args();
+    $args->matchId = $matchId;
+    $args->playerIdList = $playerIdList;
+    $args->eventTypeList = $eventTypeList;
+    $bin_accel = ($this->output_ instanceof TProtocol::$TBINARYPROTOCOLACCELERATED) && function_exists('thrift_protocol_write_binary');
+    if ($bin_accel)
+    {
+      thrift_protocol_write_binary($this->output_, 'getMatchEvents', TMessageType::CALL, $args, $this->seqid_, $this->output_->isStrictWrite());
+    }
+    else
+    {
+      $this->output_->writeMessageBegin('getMatchEvents', TMessageType::CALL, $this->seqid_);
+      $args->write($this->output_);
+      $this->output_->writeMessageEnd();
+      $this->output_->getTransport()->flush();
+    }
+  }
+
+  public function recv_getMatchEvents()
+  {
+    $bin_accel = ($this->input_ instanceof TProtocol::$TBINARYPROTOCOLACCELERATED) && function_exists('thrift_protocol_read_binary');
+    if ($bin_accel) $result = thrift_protocol_read_binary($this->input_, '\mancity\DBWorker_getMatchEvents_result', $this->input_->isStrictRead());
+    else
+    {
+      $rseqid = 0;
+      $fname = null;
+      $mtype = 0;
+
+      $this->input_->readMessageBegin($fname, $mtype, $rseqid);
+      if ($mtype == TMessageType::EXCEPTION) {
+        $x = new TApplicationException();
+        $x->read($this->input_);
+        $this->input_->readMessageEnd();
+        throw $x;
+      }
+      $result = new \mancity\DBWorker_getMatchEvents_result();
+      $result->read($this->input_);
+      $this->input_->readMessageEnd();
+    }
+    if ($result->success !== null) {
+      return $result->success;
+    }
+    throw new \Exception("getMatchEvents failed: unknown result");
   }
 
 }
@@ -337,7 +442,7 @@ class DBWorker_ping_result {
 
 }
 
-class DBWorker_allTeams_args {
+class DBWorker_getAllMatches_args {
   static $_TSPEC;
 
 
@@ -349,7 +454,7 @@ class DBWorker_allTeams_args {
   }
 
   public function getName() {
-    return 'DBWorker_allTeams_args';
+    return 'DBWorker_getAllMatches_args';
   }
 
   public function read($input)
@@ -379,7 +484,7 @@ class DBWorker_allTeams_args {
 
   public function write($output) {
     $xfer = 0;
-    $xfer += $output->writeStructBegin('DBWorker_allTeams_args');
+    $xfer += $output->writeStructBegin('DBWorker_getAllMatches_args');
     $xfer += $output->writeFieldStop();
     $xfer += $output->writeStructEnd();
     return $xfer;
@@ -387,7 +492,7 @@ class DBWorker_allTeams_args {
 
 }
 
-class DBWorker_allTeams_result {
+class DBWorker_getAllMatches_result {
   static $_TSPEC;
 
   public $success = null;
@@ -401,7 +506,7 @@ class DBWorker_allTeams_result {
           'etype' => TType::STRUCT,
           'elem' => array(
             'type' => TType::STRUCT,
-            'class' => '\mancity\Team',
+            'class' => '\mancity\Match',
             ),
           ),
         );
@@ -414,7 +519,7 @@ class DBWorker_allTeams_result {
   }
 
   public function getName() {
-    return 'DBWorker_allTeams_result';
+    return 'DBWorker_getAllMatches_result';
   }
 
   public function read($input)
@@ -441,7 +546,7 @@ class DBWorker_allTeams_result {
             for ($_i4 = 0; $_i4 < $_size0; ++$_i4)
             {
               $elem5 = null;
-              $elem5 = new \mancity\Team();
+              $elem5 = new \mancity\Match();
               $xfer += $elem5->read($input);
               $this->success []= $elem5;
             }
@@ -462,7 +567,7 @@ class DBWorker_allTeams_result {
 
   public function write($output) {
     $xfer = 0;
-    $xfer += $output->writeStructBegin('DBWorker_allTeams_result');
+    $xfer += $output->writeStructBegin('DBWorker_getAllMatches_result');
     if ($this->success !== null) {
       if (!is_array($this->success)) {
         throw new TProtocolException('Bad type in structure.', TProtocolException::INVALID_DATA);
@@ -487,29 +592,29 @@ class DBWorker_allTeams_result {
 
 }
 
-class DBWorker_teamPlayers_args {
+class DBWorker_getMatch_args {
   static $_TSPEC;
 
-  public $team_id = null;
+  public $matchId = null;
 
   public function __construct($vals=null) {
     if (!isset(self::$_TSPEC)) {
       self::$_TSPEC = array(
         1 => array(
-          'var' => 'team_id',
+          'var' => 'matchId',
           'type' => TType::I32,
           ),
         );
     }
     if (is_array($vals)) {
-      if (isset($vals['team_id'])) {
-        $this->team_id = $vals['team_id'];
+      if (isset($vals['matchId'])) {
+        $this->matchId = $vals['matchId'];
       }
     }
   }
 
   public function getName() {
-    return 'DBWorker_teamPlayers_args';
+    return 'DBWorker_getMatch_args';
   }
 
   public function read($input)
@@ -529,7 +634,7 @@ class DBWorker_teamPlayers_args {
       {
         case 1:
           if ($ftype == TType::I32) {
-            $xfer += $input->readI32($this->team_id);
+            $xfer += $input->readI32($this->matchId);
           } else {
             $xfer += $input->skip($ftype);
           }
@@ -546,10 +651,10 @@ class DBWorker_teamPlayers_args {
 
   public function write($output) {
     $xfer = 0;
-    $xfer += $output->writeStructBegin('DBWorker_teamPlayers_args');
-    if ($this->team_id !== null) {
-      $xfer += $output->writeFieldBegin('team_id', TType::I32, 1);
-      $xfer += $output->writeI32($this->team_id);
+    $xfer += $output->writeStructBegin('DBWorker_getMatch_args');
+    if ($this->matchId !== null) {
+      $xfer += $output->writeFieldBegin('matchId', TType::I32, 1);
+      $xfer += $output->writeI32($this->matchId);
       $xfer += $output->writeFieldEnd();
     }
     $xfer += $output->writeFieldStop();
@@ -559,7 +664,300 @@ class DBWorker_teamPlayers_args {
 
 }
 
-class DBWorker_teamPlayers_result {
+class DBWorker_getMatch_result {
+  static $_TSPEC;
+
+  public $success = null;
+
+  public function __construct($vals=null) {
+    if (!isset(self::$_TSPEC)) {
+      self::$_TSPEC = array(
+        0 => array(
+          'var' => 'success',
+          'type' => TType::STRUCT,
+          'class' => '\mancity\Match',
+          ),
+        );
+    }
+    if (is_array($vals)) {
+      if (isset($vals['success'])) {
+        $this->success = $vals['success'];
+      }
+    }
+  }
+
+  public function getName() {
+    return 'DBWorker_getMatch_result';
+  }
+
+  public function read($input)
+  {
+    $xfer = 0;
+    $fname = null;
+    $ftype = 0;
+    $fid = 0;
+    $xfer += $input->readStructBegin($fname);
+    while (true)
+    {
+      $xfer += $input->readFieldBegin($fname, $ftype, $fid);
+      if ($ftype == TType::STOP) {
+        break;
+      }
+      switch ($fid)
+      {
+        case 0:
+          if ($ftype == TType::STRUCT) {
+            $this->success = new \mancity\Match();
+            $xfer += $this->success->read($input);
+          } else {
+            $xfer += $input->skip($ftype);
+          }
+          break;
+        default:
+          $xfer += $input->skip($ftype);
+          break;
+      }
+      $xfer += $input->readFieldEnd();
+    }
+    $xfer += $input->readStructEnd();
+    return $xfer;
+  }
+
+  public function write($output) {
+    $xfer = 0;
+    $xfer += $output->writeStructBegin('DBWorker_getMatch_result');
+    if ($this->success !== null) {
+      if (!is_object($this->success)) {
+        throw new TProtocolException('Bad type in structure.', TProtocolException::INVALID_DATA);
+      }
+      $xfer += $output->writeFieldBegin('success', TType::STRUCT, 0);
+      $xfer += $this->success->write($output);
+      $xfer += $output->writeFieldEnd();
+    }
+    $xfer += $output->writeFieldStop();
+    $xfer += $output->writeStructEnd();
+    return $xfer;
+  }
+
+}
+
+class DBWorker_getTeamName_args {
+  static $_TSPEC;
+
+  public $teamId = null;
+
+  public function __construct($vals=null) {
+    if (!isset(self::$_TSPEC)) {
+      self::$_TSPEC = array(
+        1 => array(
+          'var' => 'teamId',
+          'type' => TType::I32,
+          ),
+        );
+    }
+    if (is_array($vals)) {
+      if (isset($vals['teamId'])) {
+        $this->teamId = $vals['teamId'];
+      }
+    }
+  }
+
+  public function getName() {
+    return 'DBWorker_getTeamName_args';
+  }
+
+  public function read($input)
+  {
+    $xfer = 0;
+    $fname = null;
+    $ftype = 0;
+    $fid = 0;
+    $xfer += $input->readStructBegin($fname);
+    while (true)
+    {
+      $xfer += $input->readFieldBegin($fname, $ftype, $fid);
+      if ($ftype == TType::STOP) {
+        break;
+      }
+      switch ($fid)
+      {
+        case 1:
+          if ($ftype == TType::I32) {
+            $xfer += $input->readI32($this->teamId);
+          } else {
+            $xfer += $input->skip($ftype);
+          }
+          break;
+        default:
+          $xfer += $input->skip($ftype);
+          break;
+      }
+      $xfer += $input->readFieldEnd();
+    }
+    $xfer += $input->readStructEnd();
+    return $xfer;
+  }
+
+  public function write($output) {
+    $xfer = 0;
+    $xfer += $output->writeStructBegin('DBWorker_getTeamName_args');
+    if ($this->teamId !== null) {
+      $xfer += $output->writeFieldBegin('teamId', TType::I32, 1);
+      $xfer += $output->writeI32($this->teamId);
+      $xfer += $output->writeFieldEnd();
+    }
+    $xfer += $output->writeFieldStop();
+    $xfer += $output->writeStructEnd();
+    return $xfer;
+  }
+
+}
+
+class DBWorker_getTeamName_result {
+  static $_TSPEC;
+
+  public $success = null;
+
+  public function __construct($vals=null) {
+    if (!isset(self::$_TSPEC)) {
+      self::$_TSPEC = array(
+        0 => array(
+          'var' => 'success',
+          'type' => TType::STRING,
+          ),
+        );
+    }
+    if (is_array($vals)) {
+      if (isset($vals['success'])) {
+        $this->success = $vals['success'];
+      }
+    }
+  }
+
+  public function getName() {
+    return 'DBWorker_getTeamName_result';
+  }
+
+  public function read($input)
+  {
+    $xfer = 0;
+    $fname = null;
+    $ftype = 0;
+    $fid = 0;
+    $xfer += $input->readStructBegin($fname);
+    while (true)
+    {
+      $xfer += $input->readFieldBegin($fname, $ftype, $fid);
+      if ($ftype == TType::STOP) {
+        break;
+      }
+      switch ($fid)
+      {
+        case 0:
+          if ($ftype == TType::STRING) {
+            $xfer += $input->readString($this->success);
+          } else {
+            $xfer += $input->skip($ftype);
+          }
+          break;
+        default:
+          $xfer += $input->skip($ftype);
+          break;
+      }
+      $xfer += $input->readFieldEnd();
+    }
+    $xfer += $input->readStructEnd();
+    return $xfer;
+  }
+
+  public function write($output) {
+    $xfer = 0;
+    $xfer += $output->writeStructBegin('DBWorker_getTeamName_result');
+    if ($this->success !== null) {
+      $xfer += $output->writeFieldBegin('success', TType::STRING, 0);
+      $xfer += $output->writeString($this->success);
+      $xfer += $output->writeFieldEnd();
+    }
+    $xfer += $output->writeFieldStop();
+    $xfer += $output->writeStructEnd();
+    return $xfer;
+  }
+
+}
+
+class DBWorker_getTeamPlayers_args {
+  static $_TSPEC;
+
+  public $teamId = null;
+
+  public function __construct($vals=null) {
+    if (!isset(self::$_TSPEC)) {
+      self::$_TSPEC = array(
+        1 => array(
+          'var' => 'teamId',
+          'type' => TType::I32,
+          ),
+        );
+    }
+    if (is_array($vals)) {
+      if (isset($vals['teamId'])) {
+        $this->teamId = $vals['teamId'];
+      }
+    }
+  }
+
+  public function getName() {
+    return 'DBWorker_getTeamPlayers_args';
+  }
+
+  public function read($input)
+  {
+    $xfer = 0;
+    $fname = null;
+    $ftype = 0;
+    $fid = 0;
+    $xfer += $input->readStructBegin($fname);
+    while (true)
+    {
+      $xfer += $input->readFieldBegin($fname, $ftype, $fid);
+      if ($ftype == TType::STOP) {
+        break;
+      }
+      switch ($fid)
+      {
+        case 1:
+          if ($ftype == TType::I32) {
+            $xfer += $input->readI32($this->teamId);
+          } else {
+            $xfer += $input->skip($ftype);
+          }
+          break;
+        default:
+          $xfer += $input->skip($ftype);
+          break;
+      }
+      $xfer += $input->readFieldEnd();
+    }
+    $xfer += $input->readStructEnd();
+    return $xfer;
+  }
+
+  public function write($output) {
+    $xfer = 0;
+    $xfer += $output->writeStructBegin('DBWorker_getTeamPlayers_args');
+    if ($this->teamId !== null) {
+      $xfer += $output->writeFieldBegin('teamId', TType::I32, 1);
+      $xfer += $output->writeI32($this->teamId);
+      $xfer += $output->writeFieldEnd();
+    }
+    $xfer += $output->writeFieldStop();
+    $xfer += $output->writeStructEnd();
+    return $xfer;
+  }
+
+}
+
+class DBWorker_getTeamPlayers_result {
   static $_TSPEC;
 
   public $success = null;
@@ -586,7 +984,7 @@ class DBWorker_teamPlayers_result {
   }
 
   public function getName() {
-    return 'DBWorker_teamPlayers_result';
+    return 'DBWorker_getTeamPlayers_result';
   }
 
   public function read($input)
@@ -634,7 +1032,7 @@ class DBWorker_teamPlayers_result {
 
   public function write($output) {
     $xfer = 0;
-    $xfer += $output->writeStructBegin('DBWorker_teamPlayers_result');
+    $xfer += $output->writeStructBegin('DBWorker_getTeamPlayers_result');
     if ($this->success !== null) {
       if (!is_array($this->success)) {
         throw new TProtocolException('Bad type in structure.', TProtocolException::INVALID_DATA);
@@ -659,37 +1057,53 @@ class DBWorker_teamPlayers_result {
 
 }
 
-class DBWorker_playerAttributes_args {
+class DBWorker_getMatchEvents_args {
   static $_TSPEC;
 
-  public $team_id = null;
-  public $player_id = null;
+  public $matchId = null;
+  public $playerIdList = null;
+  public $eventTypeList = null;
 
   public function __construct($vals=null) {
     if (!isset(self::$_TSPEC)) {
       self::$_TSPEC = array(
         1 => array(
-          'var' => 'team_id',
+          'var' => 'matchId',
           'type' => TType::I32,
           ),
         2 => array(
-          'var' => 'player_id',
-          'type' => TType::I32,
+          'var' => 'playerIdList',
+          'type' => TType::LST,
+          'etype' => TType::I32,
+          'elem' => array(
+            'type' => TType::I32,
+            ),
+          ),
+        3 => array(
+          'var' => 'eventTypeList',
+          'type' => TType::LST,
+          'etype' => TType::I32,
+          'elem' => array(
+            'type' => TType::I32,
+            ),
           ),
         );
     }
     if (is_array($vals)) {
-      if (isset($vals['team_id'])) {
-        $this->team_id = $vals['team_id'];
+      if (isset($vals['matchId'])) {
+        $this->matchId = $vals['matchId'];
       }
-      if (isset($vals['player_id'])) {
-        $this->player_id = $vals['player_id'];
+      if (isset($vals['playerIdList'])) {
+        $this->playerIdList = $vals['playerIdList'];
+      }
+      if (isset($vals['eventTypeList'])) {
+        $this->eventTypeList = $vals['eventTypeList'];
       }
     }
   }
 
   public function getName() {
-    return 'DBWorker_playerAttributes_args';
+    return 'DBWorker_getMatchEvents_args';
   }
 
   public function read($input)
@@ -709,14 +1123,41 @@ class DBWorker_playerAttributes_args {
       {
         case 1:
           if ($ftype == TType::I32) {
-            $xfer += $input->readI32($this->team_id);
+            $xfer += $input->readI32($this->matchId);
           } else {
             $xfer += $input->skip($ftype);
           }
           break;
         case 2:
-          if ($ftype == TType::I32) {
-            $xfer += $input->readI32($this->player_id);
+          if ($ftype == TType::LST) {
+            $this->playerIdList = array();
+            $_size14 = 0;
+            $_etype17 = 0;
+            $xfer += $input->readListBegin($_etype17, $_size14);
+            for ($_i18 = 0; $_i18 < $_size14; ++$_i18)
+            {
+              $elem19 = null;
+              $xfer += $input->readI32($elem19);
+              $this->playerIdList []= $elem19;
+            }
+            $xfer += $input->readListEnd();
+          } else {
+            $xfer += $input->skip($ftype);
+          }
+          break;
+        case 3:
+          if ($ftype == TType::LST) {
+            $this->eventTypeList = array();
+            $_size20 = 0;
+            $_etype23 = 0;
+            $xfer += $input->readListBegin($_etype23, $_size20);
+            for ($_i24 = 0; $_i24 < $_size20; ++$_i24)
+            {
+              $elem25 = null;
+              $xfer += $input->readI32($elem25);
+              $this->eventTypeList []= $elem25;
+            }
+            $xfer += $input->readListEnd();
           } else {
             $xfer += $input->skip($ftype);
           }
@@ -733,15 +1174,44 @@ class DBWorker_playerAttributes_args {
 
   public function write($output) {
     $xfer = 0;
-    $xfer += $output->writeStructBegin('DBWorker_playerAttributes_args');
-    if ($this->team_id !== null) {
-      $xfer += $output->writeFieldBegin('team_id', TType::I32, 1);
-      $xfer += $output->writeI32($this->team_id);
+    $xfer += $output->writeStructBegin('DBWorker_getMatchEvents_args');
+    if ($this->matchId !== null) {
+      $xfer += $output->writeFieldBegin('matchId', TType::I32, 1);
+      $xfer += $output->writeI32($this->matchId);
       $xfer += $output->writeFieldEnd();
     }
-    if ($this->player_id !== null) {
-      $xfer += $output->writeFieldBegin('player_id', TType::I32, 2);
-      $xfer += $output->writeI32($this->player_id);
+    if ($this->playerIdList !== null) {
+      if (!is_array($this->playerIdList)) {
+        throw new TProtocolException('Bad type in structure.', TProtocolException::INVALID_DATA);
+      }
+      $xfer += $output->writeFieldBegin('playerIdList', TType::LST, 2);
+      {
+        $output->writeListBegin(TType::I32, count($this->playerIdList));
+        {
+          foreach ($this->playerIdList as $iter26)
+          {
+            $xfer += $output->writeI32($iter26);
+          }
+        }
+        $output->writeListEnd();
+      }
+      $xfer += $output->writeFieldEnd();
+    }
+    if ($this->eventTypeList !== null) {
+      if (!is_array($this->eventTypeList)) {
+        throw new TProtocolException('Bad type in structure.', TProtocolException::INVALID_DATA);
+      }
+      $xfer += $output->writeFieldBegin('eventTypeList', TType::LST, 3);
+      {
+        $output->writeListBegin(TType::I32, count($this->eventTypeList));
+        {
+          foreach ($this->eventTypeList as $iter27)
+          {
+            $xfer += $output->writeI32($iter27);
+          }
+        }
+        $output->writeListEnd();
+      }
       $xfer += $output->writeFieldEnd();
     }
     $xfer += $output->writeFieldStop();
@@ -751,7 +1221,7 @@ class DBWorker_playerAttributes_args {
 
 }
 
-class DBWorker_playerAttributes_result {
+class DBWorker_getMatchEvents_result {
   static $_TSPEC;
 
   public $success = null;
@@ -761,8 +1231,12 @@ class DBWorker_playerAttributes_result {
       self::$_TSPEC = array(
         0 => array(
           'var' => 'success',
-          'type' => TType::STRUCT,
-          'class' => '\mancity\PlayerAttributes',
+          'type' => TType::LST,
+          'etype' => TType::STRUCT,
+          'elem' => array(
+            'type' => TType::STRUCT,
+            'class' => '\mancity\Event',
+            ),
           ),
         );
     }
@@ -774,7 +1248,7 @@ class DBWorker_playerAttributes_result {
   }
 
   public function getName() {
-    return 'DBWorker_playerAttributes_result';
+    return 'DBWorker_getMatchEvents_result';
   }
 
   public function read($input)
@@ -793,9 +1267,19 @@ class DBWorker_playerAttributes_result {
       switch ($fid)
       {
         case 0:
-          if ($ftype == TType::STRUCT) {
-            $this->success = new \mancity\PlayerAttributes();
-            $xfer += $this->success->read($input);
+          if ($ftype == TType::LST) {
+            $this->success = array();
+            $_size28 = 0;
+            $_etype31 = 0;
+            $xfer += $input->readListBegin($_etype31, $_size28);
+            for ($_i32 = 0; $_i32 < $_size28; ++$_i32)
+            {
+              $elem33 = null;
+              $elem33 = new \mancity\Event();
+              $xfer += $elem33->read($input);
+              $this->success []= $elem33;
+            }
+            $xfer += $input->readListEnd();
           } else {
             $xfer += $input->skip($ftype);
           }
@@ -812,13 +1296,22 @@ class DBWorker_playerAttributes_result {
 
   public function write($output) {
     $xfer = 0;
-    $xfer += $output->writeStructBegin('DBWorker_playerAttributes_result');
+    $xfer += $output->writeStructBegin('DBWorker_getMatchEvents_result');
     if ($this->success !== null) {
-      if (!is_object($this->success)) {
+      if (!is_array($this->success)) {
         throw new TProtocolException('Bad type in structure.', TProtocolException::INVALID_DATA);
       }
-      $xfer += $output->writeFieldBegin('success', TType::STRUCT, 0);
-      $xfer += $this->success->write($output);
+      $xfer += $output->writeFieldBegin('success', TType::LST, 0);
+      {
+        $output->writeListBegin(TType::STRUCT, count($this->success));
+        {
+          foreach ($this->success as $iter34)
+          {
+            $xfer += $iter34->write($output);
+          }
+        }
+        $output->writeListEnd();
+      }
       $xfer += $output->writeFieldEnd();
     }
     $xfer += $output->writeFieldStop();

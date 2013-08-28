@@ -27,19 +27,29 @@ class DBWorkerHandler : virtual public DBWorkerIf {
     printf("ping\n");
   }
 
-  void allTeams(TeamList& _return) {
+  void getAllMatches(MatchList& _return) {
     // Your implementation goes here
-    printf("allTeams\n");
+    printf("getAllMatches\n");
   }
 
-  void teamPlayers(PlayerList& _return, const int32_t team_id) {
+  void getMatch(Match& _return, const int32_t matchId) {
     // Your implementation goes here
-    printf("teamPlayers\n");
+    printf("getMatch\n");
   }
 
-  void playerAttributes(PlayerAttributes& _return, const int32_t team_id, const int32_t player_id) {
+  void getTeamName(std::string& _return, const int32_t teamId) {
     // Your implementation goes here
-    printf("playerAttributes\n");
+    printf("getTeamName\n");
+  }
+
+  void getTeamPlayers(PlayerList& _return, const int32_t teamId) {
+    // Your implementation goes here
+    printf("getTeamPlayers\n");
+  }
+
+  void getMatchEvents(EventList& _return, const int32_t matchId, const PlayerIdList& playerIdList, const EventTypeList& eventTypeList) {
+    // Your implementation goes here
+    printf("getMatchEvents\n");
   }
 
 };

@@ -1,3 +1,8 @@
-#teams-table tr {
+#matches-table tr, #home-players-table tr, #away-players-table tr, #events-table tr {
   cursor: pointer;
+}
+
+#dashboard {
+  box-shadow: 0 0 10px #888888;
+  padding: 5px;
 }

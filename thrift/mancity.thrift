@@ -2,43 +2,63 @@ namespace cpp mancity  // C++ namespace
 namespace php mancity  // PHP namespace
 
 struct Team {
-  1: required i32 teamId,
-  2: required string teamName
+  1: required i32 id,
+  2: required string name
 }
 
 struct Player {
-  1: required string playerFirstName,
-  2: required string playerLastName
-}
-
-struct PlayerAttributes {
-  1: required i32 passesSuccess,
-  2: required i32 passesFail,
-  3: required i32 shotsOnTarget,
-  4: required i32 shotsOffTarget,
+  1: required i32 id,
+  2: required string firstName,
+  3: required string lastName
 }
 
 typedef list<Team> TeamList
 
 typedef list<Player> PlayerList
 
+struct Match {
+  1: required i32 id,
+  2: required i32 homeId,
+  3: required i32 awayId
+}
+
+typedef list<Match> MatchList
+
+struct Event {
+  1: required i32 id,
+  2: required i32 eventType,
+  3: required i32 playerId,
+  4: required double startX,
+  5: required double startY,
+  6: optional double endX,
+  7: optional double endY,
+  8: optional double goalY,
+  9: optional double goalZ
+}
+
+typedef list<Event> EventList
+
+typedef list<i32> PlayerIdList
+typedef list<i32> EventTypeList
+
 service DBWorker {
-  
   void ping(),
 
-  TeamList allTeams(),
+  MatchList getAllMatches(),
 
-  PlayerList teamPlayers(1: i32 team_id),
+  Match getMatch(1: i32 matchId),
 
-  PlayerAttributes playerAttributes(1: i32 team_id, 2: i32 player_id)
+  string getTeamName(1: i32 teamId),
+
+  PlayerList getTeamPlayers(1: i32 teamId),
+
+  EventList getMatchEvents(1: i32 matchId, 2: PlayerIdList playerIdList, 3: EventTypeList eventTypeList)
 }
 
 service DBMaster {
   void ping(),
 
-  TeamList allTeams(),
+  MatchList getAllMatches(),
 
-  PlayerList teamPlayers(1: i32 team_id),
-
-  PlayerAttributes playerAttributes(1: i32 team_id, 2: i32 player_id)
+  PlayerList teamPlayers(1: i32 teamId),
 }

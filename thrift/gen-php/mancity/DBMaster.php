@@ -17,9 +17,8 @@ use Thrift\Exception\TApplicationException;
 
 interface DBMasterIf {
   public function ping();
-  public function allTeams();
-  public function teamPlayers($team_id);
-  public function playerAttributes($team_id, $player_id);
+  public function getAllMatches();
+  public function teamPlayers($teamId);
 }
 
 class DBMasterClient implements \mancity\DBMasterIf {
@@ -80,33 +79,33 @@ class DBMasterClient implements \mancity\DBMasterIf {
     return;
   }
 
-  public function allTeams()
+  public function getAllMatches()
   {
-    $this->send_allTeams();
-    return $this->recv_allTeams();
+    $this->send_getAllMatches();
+    return $this->recv_getAllMatches();
   }
 
-  public function send_allTeams()
+  public function send_getAllMatches()
   {
-    $args = new \mancity\DBMaster_allTeams_args();
+    $args = new \mancity\DBMaster_getAllMatches_args();
     $bin_accel = ($this->output_ instanceof TProtocol::$TBINARYPROTOCOLACCELERATED) && function_exists('thrift_protocol_write_binary');
     if ($bin_accel)
     {
-      thrift_protocol_write_binary($this->output_, 'allTeams', TMessageType::CALL, $args, $this->seqid_, $this->output_->isStrictWrite());
+      thrift_protocol_write_binary($this->output_, 'getAllMatches', TMessageType::CALL, $args, $this->seqid_, $this->output_->isStrictWrite());
     }
     else
     {
-      $this->output_->writeMessageBegin('allTeams', TMessageType::CALL, $this->seqid_);
+      $this->output_->writeMessageBegin('getAllMatches', TMessageType::CALL, $this->seqid_);
       $args->write($this->output_);
       $this->output_->writeMessageEnd();
       $this->output_->getTransport()->flush();
     }
   }
 
-  public function recv_allTeams()
+  public function recv_getAllMatches()
   {
     $bin_accel = ($this->input_ instanceof TProtocol::$TBINARYPROTOCOLACCELERATED) && function_exists('thrift_protocol_read_binary');
-    if ($bin_accel) $result = thrift_protocol_read_binary($this->input_, '\mancity\DBMaster_allTeams_result', $this->input_->isStrictRead());
+    if ($bin_accel) $result = thrift_protocol_read_binary($this->input_, '\mancity\DBMaster_getAllMatches_result', $this->input_->isStrictRead());
     else
     {
       $rseqid = 0;
@@ -120,26 +119,26 @@ class DBMasterClient implements \mancity\DBMasterIf {
         $this->input_->readMessageEnd();
         throw $x;
       }
-      $result = new \mancity\DBMaster_allTeams_result();
+      $result = new \mancity\DBMaster_getAllMatches_result();
       $result->read($this->input_);
       $this->input_->readMessageEnd();
     }
     if ($result->success !== null) {
       return $result->success;
     }
-    throw new \Exception("allTeams failed: unknown result");
+    throw new \Exception("getAllMatches failed: unknown result");
   }
 
-  public function teamPlayers($team_id)
+  public function teamPlayers($teamId)
   {
-    $this->send_teamPlayers($team_id);
+    $this->send_teamPlayers($teamId);
     return $this->recv_teamPlayers();
   }
 
-  public function send_teamPlayers($team_id)
+  public function send_teamPlayers($teamId)
   {
     $args = new \mancity\DBMaster_teamPlayers_args();
-    $args->team_id = $team_id;
+    $args->teamId = $teamId;
     $bin_accel = ($this->output_ instanceof TProtocol::$TBINARYPROTOCOLACCELERATED) && function_exists('thrift_protocol_write_binary');
     if ($bin_accel)
     {
@@ -179,58 +178,6 @@ class DBMasterClient implements \mancity\DBMasterIf {
       return $result->success;
     }
     throw new \Exception("teamPlayers failed: unknown result");
-  }
-
-  public function playerAttributes($team_id, $player_id)
-  {
-    $this->send_playerAttributes($team_id, $player_id);
-    return $this->recv_playerAttributes();
-  }
-
-  public function send_playerAttributes($team_id, $player_id)
-  {
-    $args = new \mancity\DBMaster_playerAttributes_args();
-    $args->team_id = $team_id;
-    $args->player_id = $player_id;
-    $bin_accel = ($this->output_ instanceof TProtocol::$TBINARYPROTOCOLACCELERATED) && function_exists('thrift_protocol_write_binary');
-    if ($bin_accel)
-    {
-      thrift_protocol_write_binary($this->output_, 'playerAttributes', TMessageType::CALL, $args, $this->seqid_, $this->output_->isStrictWrite());
-    }
-    else
-    {
-      $this->output_->writeMessageBegin('playerAttributes', TMessageType::CALL, $this->seqid_);
-      $args->write($this->output_);
-      $this->output_->writeMessageEnd();
-      $this->output_->getTransport()->flush();
-    }
-  }
-
-  public function recv_playerAttributes()
-  {
-    $bin_accel = ($this->input_ instanceof TProtocol::$TBINARYPROTOCOLACCELERATED) && function_exists('thrift_protocol_read_binary');
-    if ($bin_accel) $result = thrift_protocol_read_binary($this->input_, '\mancity\DBMaster_playerAttributes_result', $this->input_->isStrictRead());
-    else
-    {
-      $rseqid = 0;
-      $fname = null;
-      $mtype = 0;
-
-      $this->input_->readMessageBegin($fname, $mtype, $rseqid);
-      if ($mtype == TMessageType::EXCEPTION) {
-        $x = new TApplicationException();
-        $x->read($this->input_);
-        $this->input_->readMessageEnd();
-        throw $x;
-      }
-      $result = new \mancity\DBMaster_playerAttributes_result();
-      $result->read($this->input_);
-      $this->input_->readMessageEnd();
-    }
-    if ($result->success !== null) {
-      return $result->success;
-    }
-    throw new \Exception("playerAttributes failed: unknown result");
   }
 
 }
@@ -337,7 +284,7 @@ class DBMaster_ping_result {
 
 }
 
-class DBMaster_allTeams_args {
+class DBMaster_getAllMatches_args {
   static $_TSPEC;
 
 
@@ -349,7 +296,7 @@ class DBMaster_allTeams_args {
   }
 
   public function getName() {
-    return 'DBMaster_allTeams_args';
+    return 'DBMaster_getAllMatches_args';
   }
 
   public function read($input)
@@ -379,7 +326,7 @@ class DBMaster_allTeams_args {
 
   public function write($output) {
     $xfer = 0;
-    $xfer += $output->writeStructBegin('DBMaster_allTeams_args');
+    $xfer += $output->writeStructBegin('DBMaster_getAllMatches_args');
     $xfer += $output->writeFieldStop();
     $xfer += $output->writeStructEnd();
     return $xfer;
@@ -387,7 +334,7 @@ class DBMaster_allTeams_args {
 
 }
 
-class DBMaster_allTeams_result {
+class DBMaster_getAllMatches_result {
   static $_TSPEC;
 
   public $success = null;
@@ -401,7 +348,7 @@ class DBMaster_allTeams_result {
           'etype' => TType::STRUCT,
           'elem' => array(
             'type' => TType::STRUCT,
-            'class' => '\mancity\Team',
+            'class' => '\mancity\Match',
             ),
           ),
         );
@@ -414,7 +361,7 @@ class DBMaster_allTeams_result {
   }
 
   public function getName() {
-    return 'DBMaster_allTeams_result';
+    return 'DBMaster_getAllMatches_result';
   }
 
   public function read($input)
@@ -435,15 +382,15 @@ class DBMaster_allTeams_result {
         case 0:
           if ($ftype == TType::LST) {
             $this->success = array();
-            $_size14 = 0;
-            $_etype17 = 0;
-            $xfer += $input->readListBegin($_etype17, $_size14);
-            for ($_i18 = 0; $_i18 < $_size14; ++$_i18)
+            $_size35 = 0;
+            $_etype38 = 0;
+            $xfer += $input->readListBegin($_etype38, $_size35);
+            for ($_i39 = 0; $_i39 < $_size35; ++$_i39)
             {
-              $elem19 = null;
-              $elem19 = new \mancity\Team();
-              $xfer += $elem19->read($input);
-              $this->success []= $elem19;
+              $elem40 = null;
+              $elem40 = new \mancity\Match();
+              $xfer += $elem40->read($input);
+              $this->success []= $elem40;
             }
             $xfer += $input->readListEnd();
           } else {
@@ -462,7 +409,7 @@ class DBMaster_allTeams_result {
 
   public function write($output) {
     $xfer = 0;
-    $xfer += $output->writeStructBegin('DBMaster_allTeams_result');
+    $xfer += $output->writeStructBegin('DBMaster_getAllMatches_result');
     if ($this->success !== null) {
       if (!is_array($this->success)) {
         throw new TProtocolException('Bad type in structure.', TProtocolException::INVALID_DATA);
@@ -471,9 +418,9 @@ class DBMaster_allTeams_result {
       {
         $output->writeListBegin(TType::STRUCT, count($this->success));
         {
-          foreach ($this->success as $iter20)
+          foreach ($this->success as $iter41)
           {
-            $xfer += $iter20->write($output);
+            $xfer += $iter41->write($output);
           }
         }
         $output->writeListEnd();
@@ -490,20 +437,20 @@ class DBMaster_allTeams_result {
 class DBMaster_teamPlayers_args {
   static $_TSPEC;
 
-  public $team_id = null;
+  public $teamId = null;
 
   public function __construct($vals=null) {
     if (!isset(self::$_TSPEC)) {
       self::$_TSPEC = array(
         1 => array(
-          'var' => 'team_id',
+          'var' => 'teamId',
           'type' => TType::I32,
           ),
         );
     }
     if (is_array($vals)) {
-      if (isset($vals['team_id'])) {
-        $this->team_id = $vals['team_id'];
+      if (isset($vals['teamId'])) {
+        $this->teamId = $vals['teamId'];
       }
     }
   }
@@ -529,7 +476,7 @@ class DBMaster_teamPlayers_args {
       {
         case 1:
           if ($ftype == TType::I32) {
-            $xfer += $input->readI32($this->team_id);
+            $xfer += $input->readI32($this->teamId);
           } else {
             $xfer += $input->skip($ftype);
           }
@@ -547,9 +494,9 @@ class DBMaster_teamPlayers_args {
   public function write($output) {
     $xfer = 0;
     $xfer += $output->writeStructBegin('DBMaster_teamPlayers_args');
-    if ($this->team_id !== null) {
-      $xfer += $output->writeFieldBegin('team_id', TType::I32, 1);
-      $xfer += $output->writeI32($this->team_id);
+    if ($this->teamId !== null) {
+      $xfer += $output->writeFieldBegin('teamId', TType::I32, 1);
+      $xfer += $output->writeI32($this->teamId);
       $xfer += $output->writeFieldEnd();
     }
     $xfer += $output->writeFieldStop();
@@ -607,15 +554,15 @@ class DBMaster_teamPlayers_result {
         case 0:
           if ($ftype == TType::LST) {
             $this->success = array();
-            $_size21 = 0;
-            $_etype24 = 0;
-            $xfer += $input->readListBegin($_etype24, $_size21);
-            for ($_i25 = 0; $_i25 < $_size21; ++$_i25)
+            $_size42 = 0;
+            $_etype45 = 0;
+            $xfer += $input->readListBegin($_etype45, $_size42);
+            for ($_i46 = 0; $_i46 < $_size42; ++$_i46)
             {
-              $elem26 = null;
-              $elem26 = new \mancity\Player();
-              $xfer += $elem26->read($input);
-              $this->success []= $elem26;
+              $elem47 = null;
+              $elem47 = new \mancity\Player();
+              $xfer += $elem47->read($input);
+              $this->success []= $elem47;
             }
             $xfer += $input->readListEnd();
           } else {
@@ -643,182 +590,13 @@ class DBMaster_teamPlayers_result {
       {
         $output->writeListBegin(TType::STRUCT, count($this->success));
         {
-          foreach ($this->success as $iter27)
+          foreach ($this->success as $iter48)
           {
-            $xfer += $iter27->write($output);
+            $xfer += $iter48->write($output);
           }
         }
         $output->writeListEnd();
       }
-      $xfer += $output->writeFieldEnd();
-    }
-    $xfer += $output->writeFieldStop();
-    $xfer += $output->writeStructEnd();
-    return $xfer;
-  }
-
-}
-
-class DBMaster_playerAttributes_args {
-  static $_TSPEC;
-
-  public $team_id = null;
-  public $player_id = null;
-
-  public function __construct($vals=null) {
-    if (!isset(self::$_TSPEC)) {
-      self::$_TSPEC = array(
-        1 => array(
-          'var' => 'team_id',
-          'type' => TType::I32,
-          ),
-        2 => array(
-          'var' => 'player_id',
-          'type' => TType::I32,
-          ),
-        );
-    }
-    if (is_array($vals)) {
-      if (isset($vals['team_id'])) {
-        $this->team_id = $vals['team_id'];
-      }
-      if (isset($vals['player_id'])) {
-        $this->player_id = $vals['player_id'];
-      }
-    }
-  }
-
-  public function getName() {
-    return 'DBMaster_playerAttributes_args';
-  }
-
-  public function read($input)
-  {
-    $xfer = 0;
-    $fname = null;
-    $ftype = 0;
-    $fid = 0;
-    $xfer += $input->readStructBegin($fname);
-    while (true)
-    {
-      $xfer += $input->readFieldBegin($fname, $ftype, $fid);
-      if ($ftype == TType::STOP) {
-        break;
-      }
-      switch ($fid)
-      {
-        case 1:
-          if ($ftype == TType::I32) {
-            $xfer += $input->readI32($this->team_id);
-          } else {
-            $xfer += $input->skip($ftype);
-          }
-          break;
-        case 2:
-          if ($ftype == TType::I32) {
-            $xfer += $input->readI32($this->player_id);
-          } else {
-            $xfer += $input->skip($ftype);
-          }
-          break;
-        default:
-          $xfer += $input->skip($ftype);
-          break;
-      }
-      $xfer += $input->readFieldEnd();
-    }
-    $xfer += $input->readStructEnd();
-    return $xfer;
-  }
-
-  public function write($output) {
-    $xfer = 0;
-    $xfer += $output->writeStructBegin('DBMaster_playerAttributes_args');
-    if ($this->team_id !== null) {
-      $xfer += $output->writeFieldBegin('team_id', TType::I32, 1);
-      $xfer += $output->writeI32($this->team_id);
-      $xfer += $output->writeFieldEnd();
-    }
-    if ($this->player_id !== null) {
-      $xfer += $output->writeFieldBegin('player_id', TType::I32, 2);
-      $xfer += $output->writeI32($this->player_id);
-      $xfer += $output->writeFieldEnd();
-    }
-    $xfer += $output->writeFieldStop();
-    $xfer += $output->writeStructEnd();
-    return $xfer;
-  }
-
-}
-
-class DBMaster_playerAttributes_result {
-  static $_TSPEC;
-
-  public $success = null;
-
-  public function __construct($vals=null) {
-    if (!isset(self::$_TSPEC)) {
-      self::$_TSPEC = array(
-        0 => array(
-          'var' => 'success',
-          'type' => TType::STRUCT,
-          'class' => '\mancity\PlayerAttributes',
-          ),
-        );
-    }
-    if (is_array($vals)) {
-      if (isset($vals['success'])) {
-        $this->success = $vals['success'];
-      }
-    }
-  }
-
-  public function getName() {
-    return 'DBMaster_playerAttributes_result';
-  }
-
-  public function read($input)
-  {
-    $xfer = 0;
-    $fname = null;
-    $ftype = 0;
-    $fid = 0;
-    $xfer += $input->readStructBegin($fname);
-    while (true)
-    {
-      $xfer += $input->readFieldBegin($fname, $ftype, $fid);
-      if ($ftype == TType::STOP) {
-        break;
-      }
-      switch ($fid)
-      {
-        case 0:
-          if ($ftype == TType::STRUCT) {
-            $this->success = new \mancity\PlayerAttributes();
-            $xfer += $this->success->read($input);
-          } else {
-            $xfer += $input->skip($ftype);
-          }
-          break;
-        default:
-          $xfer += $input->skip($ftype);
-          break;
-      }
-      $xfer += $input->readFieldEnd();
-    }
-    $xfer += $input->readStructEnd();
-    return $xfer;
-  }
-
-  public function write($output) {
-    $xfer = 0;
-    $xfer += $output->writeStructBegin('DBMaster_playerAttributes_result');
-    if ($this->success !== null) {
-      if (!is_object($this->success)) {
-        throw new TProtocolException('Bad type in structure.', TProtocolException::INVALID_DATA);
-      }
-      $xfer += $output->writeFieldBegin('success', TType::STRUCT, 0);
-      $xfer += $this->success->write($output);
       $xfer += $output->writeFieldEnd();
     }
     $xfer += $output->writeFieldStop();

@@ -31,29 +31,181 @@ class DBWorkerHandler : virtual public DBWorkerIf {
     printf("ping\n");
   }
 
-  void allTeams(TeamList& _return) {
+  void getAllMatches(MatchList& _return) {
     try {
       mongo::DBClientConnection c;
       c.connect("localhost");
 
-      BSONObj constraints = BSON("_id" << 0 << "teamName" << 1 << "team_id" << 1);
-      auto_ptr<DBClientCursor> cursor = c.query("mancity.teams", BSONObj(), 0, 0, &constraints);
+      BSONObj constraints = BSON("_id" << 0 << "id" << 1 << "homeId" << 1 << "awayId" << 1);
+      auto_ptr<DBClientCursor> cursor = c.query("mancity.matches", BSONObj(), 0, 0, &constraints);
 
       while (cursor->more()) {
         bo obj = cursor->next();
 
-        Team* result = new Team();
-        result->__set_teamName(obj.getField("teamName").String());
-        result->__set_teamId((int)obj.getField("team_id").Double());
+        Match* match = new Match();
+        match->__set_id((int)obj.getField("id").Double());
+        match->__set_homeId((int)obj.getField("homeId").Double());
+        match->__set_awayId((int)obj.getField("awayId").Double());
 
-        _return.push_back(*result);
+        _return.push_back(*match);
       }
-
-
-    } catch(const mongo::DBException &e) {
+    } catch (const mongo::DBException &e) {
       std::cout << "CAUGHT EXCEPTION IN DB INTERACTION\n";
     }
   }
+
+  void getMatch(Match& _return, const int32_t matchId) {
+    try {
+      mongo::DBClientConnection c;
+      c.connect("localhost");
+
+      BSONObj constraints = BSON("_id" << 0 << "id" << 1 << "homeId" << 1 << "awayId" << 1);
+      auto_ptr<DBClientCursor> cursor =
+          c.query("mancity.matches", QUERY("id" << matchId), 0, 0, &constraints);
+
+      if (cursor->more()) {
+        bo match = cursor->next();
+
+        _return.__set_id((int)match.getField("id").Double());
+        _return.__set_homeId((int)match.getField("homeId").Double());
+        _return.__set_awayId((int)match.getField("awayId").Double());
+      }
+    } catch (const mongo::DBException &e) {
+      std::cout << "CAUGHT EXCEPTION IN DB INTERACTION";
+    }
+  }
+
+  void getTeamName(std::string& _return, const int32_t teamId) {
+    try {
+      mongo::DBClientConnection c;
+      c.connect("localhost");
+
+      BSONObj constraints = BSON("_id" << 0 << "name" << 1);
+      auto_ptr<DBClientCursor> cursor =
+          c.query("mancity.teams", QUERY("id" << teamId), 0, 0, &constraints);
+
+
+      if (cursor->more()) {
+        bo team = cursor->next();
+
+        _return = team.getField("name").String();
+      } else {
+        _return = "undefined";
+      }
+    } catch (const mongo::DBException &e) {
+      std::cout << "CAUGHT EXCEPTION IN DB INTERACTION\n";
+    }
+  }
+
+  void getTeamPlayers(PlayerList& _return, const int32_t teamId) {
+    try {
+      mongo::DBClientConnection c;
+      c.connect("localhost");
+
+      BSONObj constraints = BSON("_id" << 0 << "players" << 1);
+      auto_ptr<DBClientCursor> cursor =
+          c.query("mancity.teams",
+                  QUERY("id" << teamId).sort("lastName"),
+                  0,
+                  0,
+                  &constraints
+          );
+
+      while (cursor->more()) {
+        bo team = cursor->next();
+
+        if (team.hasElement("players")) {
+          std::vector<BSONElement> players = team.getField("players").Array();
+
+          for (unsigned int i = 0; i < players.size(); i++) {
+            BSONObj player = players[i].embeddedObject();
+
+            Player* player_to_add = new Player();
+            player_to_add->__set_id((int)player.getField("id").Double());
+            player_to_add->__set_firstName(player.getField("firstName").String());
+            player_to_add->__set_lastName(player.getField("lastName").String());
+
+            _return.push_back(*player_to_add);
+          }
+        }
+      }
+    } catch (const mongo::DBException &e) {
+      std::cout << "CAUGHT EXCEPTION IN DB INTERACTION\n";
+    }
+  }
+
+  void getMatchEvents(EventList& _return, const int32_t matchId, const PlayerIdList& playerIdList, const EventTypeList& eventTypeList) {
+    try {
+      mongo::DBClientConnection c;
+      c.connect("localhost");
+
+      BSONObj constraints = BSON("_id" << 0 << "events" << 1);
+      auto_ptr<DBClientCursor> cursor =
+          c.query("mancity.matches",
+                  QUERY("id" << matchId),
+                  0,
+                  0,
+                  &constraints
+          );
+
+      while (cursor->more()) {
+        bo match = cursor->next();
+
+        if (match.hasElement("events")) {
+          std::vector<BSONElement> events = match.getField("events").Array();
+
+          for (unsigned int i = 0; i < events.size(); i++) {
+            BSONObj event = events[i].embeddedObject();
+
+            Event* event_to_add = new Event();
+            event_to_add->__set_id((int)event.getField("id").Double());
+            event_to_add->__set_eventType((int)event.getField("eventType").Double());
+            event_to_add->__set_playerId((int)event.getField("playerId").Double());
+            event_to_add->__set_startX(event.getField("startX").Double());
+            event_to_add->__set_startY(event.getField("startY").Double());
+
+
+            if (event.hasElement("endX")) {
+              event_to_add->__set_endX(event.getField("endX").Double());
+            }
+
+            if (event.hasElement("endY")) {
+              event_to_add->__set_endY(event.getField("endY").Double());
+            }
+
+            if (event.hasElement("goalY")) {
+              event_to_add->__set_goalY(event.getField("goalY").Double());
+            }
+
+            if (event.hasElement("goalZ")) {
+              event_to_add->__set_goalZ(event.getField("goalZ").Double());
+            }
+
+            if (contains((int)event.getField("eventType").Double(), eventTypeList) &&
+                contains((int)event.getField("playerId").Double(), playerIdList)) {
+              printf("FOUND EVENT\n");
+              _return.push_back(*event_to_add);
+            }
+          }
+        }
+      }
+
+    } catch (const mongo::DBException &e) {
+      std::cout << "CAUGHT EXCEPTION IN DB INTERACTION\n";
+    }
+  }
+
+  bool contains(int element, const std::vector<int>& list) {
+    for (unsigned int i = 0; i < list.size(); i ++) {
+      if (list[i] == element) {
+        return true;
+      }
+    }
+
+    return false;
+  }
+
+  /*
 
   void teamPlayers(PlayerList& _return, const int32_t team_id) {
     try {
@@ -98,7 +250,7 @@ class DBWorkerHandler : virtual public DBWorkerIf {
   void playerAttributes(PlayerAttributes& _return, const int32_t team_id, const int32_t player_id) {
     // Your implementation goes here
     printf("playerAttributes\n");
-  }
+  }*/
 
 };
 

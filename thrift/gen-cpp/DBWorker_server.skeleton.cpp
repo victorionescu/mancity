@@ -47,9 +47,24 @@ class DBWorkerHandler : virtual public DBWorkerIf {
     printf("getTeamPlayers\n");
   }
 
+  void getPlayer(Player& _return, const int32_t teamId, const int32_t playerId) {
+    // Your implementation goes here
+    printf("getPlayer\n");
+  }
+
   void getMatchEvents(EventList& _return, const int32_t matchId, const PlayerIdList& playerIdList, const EventTypeList& eventTypeList) {
     // Your implementation goes here
     printf("getMatchEvents\n");
+  }
+
+  void getEvent(Event& _return, const int32_t matchId, const int32_t eventId) {
+    // Your implementation goes here
+    printf("getEvent\n");
+  }
+
+  void getGoalEvents(EventList& _return, const int32_t matchId, const int32_t eventId) {
+    // Your implementation goes here
+    printf("getGoalEvents\n");
   }
 
 };

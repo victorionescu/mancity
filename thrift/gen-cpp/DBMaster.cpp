@@ -187,14 +187,14 @@ uint32_t DBMaster_getAllMatches_result::read(::apache::thrift::protocol::TProtoc
         if (ftype == ::apache::thrift::protocol::T_LIST) {
           {
             this->success.clear();
-            uint32_t _size47;
-            ::apache::thrift::protocol::TType _etype50;
-            xfer += iprot->readListBegin(_etype50, _size47);
-            this->success.resize(_size47);
-            uint32_t _i51;
-            for (_i51 = 0; _i51 < _size47; ++_i51)
+            uint32_t _size58;
+            ::apache::thrift::protocol::TType _etype61;
+            xfer += iprot->readListBegin(_etype61, _size58);
+            this->success.resize(_size58);
+            uint32_t _i62;
+            for (_i62 = 0; _i62 < _size58; ++_i62)
             {
-              xfer += this->success[_i51].read(iprot);
+              xfer += this->success[_i62].read(iprot);
             }
             xfer += iprot->readListEnd();
           }
@@ -225,10 +225,10 @@ uint32_t DBMaster_getAllMatches_result::write(::apache::thrift::protocol::TProto
     xfer += oprot->writeFieldBegin("success", ::apache::thrift::protocol::T_LIST, 0);
     {
       xfer += oprot->writeListBegin(::apache::thrift::protocol::T_STRUCT, static_cast<uint32_t>(this->success.size()));
-      std::vector<Match> ::const_iterator _iter52;
-      for (_iter52 = this->success.begin(); _iter52 != this->success.end(); ++_iter52)
+      std::vector<Match> ::const_iterator _iter63;
+      for (_iter63 = this->success.begin(); _iter63 != this->success.end(); ++_iter63)
       {
-        xfer += (*_iter52).write(oprot);
+        xfer += (*_iter63).write(oprot);
       }
       xfer += oprot->writeListEnd();
     }
@@ -263,14 +263,14 @@ uint32_t DBMaster_getAllMatches_presult::read(::apache::thrift::protocol::TProto
         if (ftype == ::apache::thrift::protocol::T_LIST) {
           {
             (*(this->success)).clear();
-            uint32_t _size53;
-            ::apache::thrift::protocol::TType _etype56;
-            xfer += iprot->readListBegin(_etype56, _size53);
-            (*(this->success)).resize(_size53);
-            uint32_t _i57;
-            for (_i57 = 0; _i57 < _size53; ++_i57)
+            uint32_t _size64;
+            ::apache::thrift::protocol::TType _etype67;
+            xfer += iprot->readListBegin(_etype67, _size64);
+            (*(this->success)).resize(_size64);
+            uint32_t _i68;
+            for (_i68 = 0; _i68 < _size64; ++_i68)
             {
-              xfer += (*(this->success))[_i57].read(iprot);
+              xfer += (*(this->success))[_i68].read(iprot);
             }
             xfer += iprot->readListEnd();
           }
@@ -381,14 +381,14 @@ uint32_t DBMaster_teamPlayers_result::read(::apache::thrift::protocol::TProtocol
         if (ftype == ::apache::thrift::protocol::T_LIST) {
           {
             this->success.clear();
-            uint32_t _size58;
-            ::apache::thrift::protocol::TType _etype61;
-            xfer += iprot->readListBegin(_etype61, _size58);
-            this->success.resize(_size58);
-            uint32_t _i62;
-            for (_i62 = 0; _i62 < _size58; ++_i62)
+            uint32_t _size69;
+            ::apache::thrift::protocol::TType _etype72;
+            xfer += iprot->readListBegin(_etype72, _size69);
+            this->success.resize(_size69);
+            uint32_t _i73;
+            for (_i73 = 0; _i73 < _size69; ++_i73)
             {
-              xfer += this->success[_i62].read(iprot);
+              xfer += this->success[_i73].read(iprot);
             }
             xfer += iprot->readListEnd();
           }
@@ -419,10 +419,10 @@ uint32_t DBMaster_teamPlayers_result::write(::apache::thrift::protocol::TProtoco
     xfer += oprot->writeFieldBegin("success", ::apache::thrift::protocol::T_LIST, 0);
     {
       xfer += oprot->writeListBegin(::apache::thrift::protocol::T_STRUCT, static_cast<uint32_t>(this->success.size()));
-      std::vector<Player> ::const_iterator _iter63;
-      for (_iter63 = this->success.begin(); _iter63 != this->success.end(); ++_iter63)
+      std::vector<Player> ::const_iterator _iter74;
+      for (_iter74 = this->success.begin(); _iter74 != this->success.end(); ++_iter74)
       {
-        xfer += (*_iter63).write(oprot);
+        xfer += (*_iter74).write(oprot);
       }
       xfer += oprot->writeListEnd();
     }
@@ -457,14 +457,14 @@ uint32_t DBMaster_teamPlayers_presult::read(::apache::thrift::protocol::TProtoco
         if (ftype == ::apache::thrift::protocol::T_LIST) {
           {
             (*(this->success)).clear();
-            uint32_t _size64;
-            ::apache::thrift::protocol::TType _etype67;
-            xfer += iprot->readListBegin(_etype67, _size64);
-            (*(this->success)).resize(_size64);
-            uint32_t _i68;
-            for (_i68 = 0; _i68 < _size64; ++_i68)
+            uint32_t _size75;
+            ::apache::thrift::protocol::TType _etype78;
+            xfer += iprot->readListBegin(_etype78, _size75);
+            (*(this->success)).resize(_size75);
+            uint32_t _i79;
+            for (_i79 = 0; _i79 < _size75; ++_i79)
             {
-              xfer += (*(this->success))[_i68].read(iprot);
+              xfer += (*(this->success))[_i79].read(iprot);
             }
             xfer += iprot->readListEnd();
           }

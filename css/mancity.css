@@ -2,7 +2,36 @@
   cursor: pointer;
 }
 
-#dashboard {
+.btn-block {
+  padding: 5px 0 5px 0;
+}
+
+#dashboard-overlay {
+  position: fixed;
+  top: 5%;
+  right: -10000px;
+
+  width: 1000px;
+  height: 90%;
+
+  overflow: scroll;
+
   box-shadow: 0 0 10px #888888;
   padding: 5px;
+
+  background-color: #ffffff;
+}
+
+.team-roster {
+  height: 250px;
+
+  overflow: scroll;
+}
+
+#heatmap-wrapper {
+  position: relative;
+}
+
+.logo-img {
+  max-height: 50px;
 }

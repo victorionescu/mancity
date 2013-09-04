@@ -12,7 +12,7 @@
 
   $client = new DBWorkerClient($protocol);
 
-  $events = $client->getMatchEvents($_GET["matchId"], $_GET["playerIdList"], $_GET["eventTypeList"]);
+  $events = $client->getGoalEvents($_GET["matchId"], $_GET["eventId"]);
 
   for ($i = 0; $i < count($events); $i++) {
     $player = $client->getPlayer($events[$i]->teamId, $events[$i]->playerId);

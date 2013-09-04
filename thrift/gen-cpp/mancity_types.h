@@ -76,10 +76,10 @@ void swap(Team &a, Team &b);
 class Player {
  public:
 
-  static const char* ascii_fingerprint; // = "3368C2F81F2FEF71F11EDACDB2A3ECEF";
-  static const uint8_t binary_fingerprint[16]; // = {0x33,0x68,0xC2,0xF8,0x1F,0x2F,0xEF,0x71,0xF1,0x1E,0xDA,0xCD,0xB2,0xA3,0xEC,0xEF};
+  static const char* ascii_fingerprint; // = "E162B1F7953C55D6B978645D745A3B90";
+  static const uint8_t binary_fingerprint[16]; // = {0xE1,0x62,0xB1,0xF7,0x95,0x3C,0x55,0xD6,0xB9,0x78,0x64,0x5D,0x74,0x5A,0x3B,0x90};
 
-  Player() : id(0), firstName(), lastName() {
+  Player() : id(0), firstName(), lastName(), shirtNumber(0) {
   }
 
   virtual ~Player() throw() {}
@@ -87,6 +87,7 @@ class Player {
   int32_t id;
   std::string firstName;
   std::string lastName;
+  int32_t shirtNumber;
 
   void __set_id(const int32_t val) {
     id = val;
@@ -100,6 +101,10 @@ class Player {
     lastName = val;
   }
 
+  void __set_shirtNumber(const int32_t val) {
+    shirtNumber = val;
+  }
+
   bool operator == (const Player & rhs) const
   {
     if (!(id == rhs.id))
@@ -107,6 +112,8 @@ class Player {
     if (!(firstName == rhs.firstName))
       return false;
     if (!(lastName == rhs.lastName))
+      return false;
+    if (!(shirtNumber == rhs.shirtNumber))
       return false;
     return true;
   }
@@ -175,33 +182,37 @@ class Match {
 void swap(Match &a, Match &b);
 
 typedef struct _Event__isset {
-  _Event__isset() : endX(false), endY(false), goalY(false), goalZ(false) {}
+  _Event__isset() : endX(false), endY(false), goalY(false), goalZ(false), cross(false) {}
   bool endX;
   bool endY;
   bool goalY;
   bool goalZ;
+  bool cross;
 } _Event__isset;
 
 class Event {
  public:
 
-  static const char* ascii_fingerprint; // = "E3B810029A483CFDE5A201B730427042";
-  static const uint8_t binary_fingerprint[16]; // = {0xE3,0xB8,0x10,0x02,0x9A,0x48,0x3C,0xFD,0xE5,0xA2,0x01,0xB7,0x30,0x42,0x70,0x42};
+  static const char* ascii_fingerprint; // = "4C2C0E2B6917BEC89A0FAD82FCAA7A84";
+  static const uint8_t binary_fingerprint[16]; // = {0x4C,0x2C,0x0E,0x2B,0x69,0x17,0xBE,0xC8,0x9A,0x0F,0xAD,0x82,0xFC,0xAA,0x7A,0x84};
 
-  Event() : id(0), eventType(0), playerId(0), startX(0), startY(0), endX(0), endY(0), goalY(0), goalZ(0) {
+  Event() : id(0), eventType(0), teamId(0), playerId(0), outcome(0), startX(0), startY(0), endX(0), endY(0), goalY(0), goalZ(0), cross(0) {
   }
 
   virtual ~Event() throw() {}
 
   int32_t id;
   int32_t eventType;
+  int32_t teamId;
   int32_t playerId;
+  int32_t outcome;
   double startX;
   double startY;
   double endX;
   double endY;
   double goalY;
   double goalZ;
+  int32_t cross;
 
   _Event__isset __isset;
 
@@ -213,8 +224,16 @@ class Event {
     eventType = val;
   }
 
+  void __set_teamId(const int32_t val) {
+    teamId = val;
+  }
+
   void __set_playerId(const int32_t val) {
     playerId = val;
+  }
+
+  void __set_outcome(const int32_t val) {
+    outcome = val;
   }
 
   void __set_startX(const double val) {
@@ -245,13 +264,22 @@ class Event {
     __isset.goalZ = true;
   }
 
+  void __set_cross(const int32_t val) {
+    cross = val;
+    __isset.cross = true;
+  }
+
   bool operator == (const Event & rhs) const
   {
     if (!(id == rhs.id))
       return false;
     if (!(eventType == rhs.eventType))
       return false;
+    if (!(teamId == rhs.teamId))
+      return false;
     if (!(playerId == rhs.playerId))
+      return false;
+    if (!(outcome == rhs.outcome))
       return false;
     if (!(startX == rhs.startX))
       return false;
@@ -272,6 +300,10 @@ class Event {
     if (__isset.goalZ != rhs.__isset.goalZ)
       return false;
     else if (__isset.goalZ && !(goalZ == rhs.goalZ))
+      return false;
+    if (__isset.cross != rhs.__isset.cross)
+      return false;
+    else if (__isset.cross && !(cross == rhs.cross))
       return false;
     return true;
   }

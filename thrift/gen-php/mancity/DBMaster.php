@@ -382,15 +382,15 @@ class DBMaster_getAllMatches_result {
         case 0:
           if ($ftype == TType::LST) {
             $this->success = array();
-            $_size35 = 0;
-            $_etype38 = 0;
-            $xfer += $input->readListBegin($_etype38, $_size35);
-            for ($_i39 = 0; $_i39 < $_size35; ++$_i39)
+            $_size42 = 0;
+            $_etype45 = 0;
+            $xfer += $input->readListBegin($_etype45, $_size42);
+            for ($_i46 = 0; $_i46 < $_size42; ++$_i46)
             {
-              $elem40 = null;
-              $elem40 = new \mancity\Match();
-              $xfer += $elem40->read($input);
-              $this->success []= $elem40;
+              $elem47 = null;
+              $elem47 = new \mancity\Match();
+              $xfer += $elem47->read($input);
+              $this->success []= $elem47;
             }
             $xfer += $input->readListEnd();
           } else {
@@ -418,9 +418,9 @@ class DBMaster_getAllMatches_result {
       {
         $output->writeListBegin(TType::STRUCT, count($this->success));
         {
-          foreach ($this->success as $iter41)
+          foreach ($this->success as $iter48)
           {
-            $xfer += $iter41->write($output);
+            $xfer += $iter48->write($output);
           }
         }
         $output->writeListEnd();
@@ -554,15 +554,15 @@ class DBMaster_teamPlayers_result {
         case 0:
           if ($ftype == TType::LST) {
             $this->success = array();
-            $_size42 = 0;
-            $_etype45 = 0;
-            $xfer += $input->readListBegin($_etype45, $_size42);
-            for ($_i46 = 0; $_i46 < $_size42; ++$_i46)
+            $_size49 = 0;
+            $_etype52 = 0;
+            $xfer += $input->readListBegin($_etype52, $_size49);
+            for ($_i53 = 0; $_i53 < $_size49; ++$_i53)
             {
-              $elem47 = null;
-              $elem47 = new \mancity\Player();
-              $xfer += $elem47->read($input);
-              $this->success []= $elem47;
+              $elem54 = null;
+              $elem54 = new \mancity\Player();
+              $xfer += $elem54->read($input);
+              $this->success []= $elem54;
             }
             $xfer += $input->readListEnd();
           } else {
@@ -590,9 +590,9 @@ class DBMaster_teamPlayers_result {
       {
         $output->writeListBegin(TType::STRUCT, count($this->success));
         {
-          foreach ($this->success as $iter48)
+          foreach ($this->success as $iter55)
           {
-            $xfer += $iter48->write($output);
+            $xfer += $iter55->write($output);
           }
         }
         $output->writeListEnd();

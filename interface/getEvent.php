@@ -12,14 +12,10 @@
 
   $client = new DBWorkerClient($protocol);
 
-  $events = $client->getMatchEvents($_GET["matchId"], $_GET["playerIdList"], $_GET["eventTypeList"]);
+  $event = $client->getEvent($_GET["matchId"], $_GET["eventId"]);
+  $event->shirtNumber = $client->getPlayer($event->teamId, $event->playerId)->shirtNumber;
 
-  for ($i = 0; $i < count($events); $i++) {
-    $player = $client->getPlayer($events[$i]->teamId, $events[$i]->playerId);
-    $events[$i]->shirtNumber = $player->shirtNumber;
-  }
-
-  echo json_encode($events);
+  echo json_encode($event);
 
   $transport->close();
 ?>
